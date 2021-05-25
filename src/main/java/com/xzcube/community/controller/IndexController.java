@@ -2,6 +2,7 @@ package com.xzcube.community.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author xzcube
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class IndexController {
-    @GetMapping("/")
+    @RequestMapping("/")
     public String index(){
         return "index";
     }
