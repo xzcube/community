@@ -1,0 +1,14 @@
+github:
+  client:
+    id: f7425bc7ee111e40a70a5cf425be9d32eb47dcbe25b5b9617ef3229fa32984e1
+    secret: 8fe7e0a7fc4bf317b84cf03b8cb2508a0e9328c52b141d2c219a32ffbe573b66
+  redirect:
+    uri: http://localhost:8080/callback
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: mysql1234
+    driver-class-name: com.mysql.cj.jdbc.Driver

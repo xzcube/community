@@ -16,6 +16,11 @@ import java.io.IOException;
  */
 @Component
 public class AccessProvider {
+    /**
+     * 拿code向github换token (post请求)
+     * @param accessTokenDTO
+     * @return
+     */
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
         // MediaType 决定浏览器将以什么形式、什么编码对资源进行解析
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
@@ -50,7 +55,11 @@ public class AccessProvider {
         return null;
     }
 
-    // 通过get方法获取用户信息
+    /**
+     * 通过get方法获取用户信息
+     * @param token 传入的token
+     * @return
+     */
     public GitHubUser getUser(String token) {
         OkHttpClient client = new OkHttpClient();
 
