@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -48,7 +47,7 @@ public class AuthorizeController {
         accessTokenDTO.setClient_secret(clientSecret);
         String token = accessProvider.getAccessToken(accessTokenDTO);
         GitHubUser gitHubUser = accessProvider.getUser(token);
-        if(gitHubUser != null){
+        if(gitHubUser != null && gitHubUser.getId() != null){
             // 将github的用户信息封装成项目需要的用户信息，然后插入数据库
             User user = new User();
             String uuid = UUID.randomUUID().toString(); // 生成一个uuid作为token，进行登录验证
@@ -57,6 +56,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(gitHubUser.getAvatarUrl());
             userMapper.insert(user);
 
             // 将token放入cookie中

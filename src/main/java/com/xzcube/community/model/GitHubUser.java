@@ -18,4 +18,5 @@ public class GitHubUser {
     private Integer id;
     private String name;
     private String email;
+    private String avatarUrl;
 }
