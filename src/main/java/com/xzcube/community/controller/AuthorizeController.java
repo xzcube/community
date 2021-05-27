@@ -1,10 +1,10 @@
 package com.xzcube.community.controller;
 
 import com.xzcube.community.dto.AccessTokenDTO;
-import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.GitHubUser;
 import com.xzcube.community.model.User;
 import com.xzcube.community.provider.AccessProvider;
+import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class AuthorizeController {
     @Value("${github.redirect.uri}")
     private String redirectUri;
     @Autowired(required=false)
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
@@ -57,7 +57,7 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
-            userMapper.insert(user);
+            userService.insert(user);
 
             // 将token放入cookie中
             response.addCookie(new Cookie("token", uuid));

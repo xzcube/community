@@ -12,3 +12,8 @@ spring:
     username: root
     password: mysql1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 配置驼峰命名的映射
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

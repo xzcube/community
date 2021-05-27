@@ -11,3 +11,22 @@ body{
     float: right;
     margin-bottom: 15px;
 }
+
+.media-object{
+    width: 38px;
+    height: 38px;
+}
+
+.text-desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+
+.description{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
