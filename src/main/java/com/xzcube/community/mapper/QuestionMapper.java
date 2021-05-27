@@ -3,6 +3,7 @@ package com.xzcube.community.mapper;
 import com.xzcube.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -19,6 +20,13 @@ public interface QuestionMapper {
             "(#{title}, #{description}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tag})")
     public void create(Question question);
 
-    @Select("select * from question")
-    List<Question> findAllQuestions();
+    @Select("select * from question limit #{offset}, #{size}")
+    List<Question> findAllQuestions(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+    /**
+     * 查询话题总数
+     * @return
+     */
+    @Select("select count(1) from question")
+    Integer count();
 }

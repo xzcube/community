@@ -1,5 +1,6 @@
 package com.xzcube.community.service;
 
+import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 
@@ -13,5 +14,5 @@ public interface QuestionService {
     public void create(Question question);
 
 
-    List<QuestionDTO> findAllQuestions();
+    PaginationDTO findAllQuestions(Integer page, Integer size);
 }

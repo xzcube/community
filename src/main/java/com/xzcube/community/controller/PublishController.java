@@ -1,13 +1,10 @@
 package com.xzcube.community.controller;
 
-import com.xzcube.community.mapper.QuestionMapper;
-import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
-import org.apache.ibatis.annotations.Param;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +56,7 @@ public class PublishController {
         }
         User user = null;
 
+        //遍历cookie 找到 token 用token找到对应的用户
         Cookie[] cookies = request.getCookies();
         if(cookies != null && cookies.length != 0){
             for (Cookie cookie : cookies) {

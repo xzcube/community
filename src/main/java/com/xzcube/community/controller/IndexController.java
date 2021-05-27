@@ -1,8 +1,6 @@
 package com.xzcube.community.controller;
 
-import com.xzcube.community.dto.QuestionDTO;
-import com.xzcube.community.mapper.UserMapper;
-import com.xzcube.community.model.Question;
+import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
@@ -11,10 +9,10 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author xzcube
@@ -35,7 +33,9 @@ public class IndexController {
      */
     @RequestMapping("/")
     public String index(HttpServletRequest request,
-                        Model model){
+                        Model model,
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "5") Integer size){
         // 使用token获取user对象
         User user = null;
         Cookie[] cookies = request.getCookies();
@@ -51,8 +51,9 @@ public class IndexController {
         if(user != null){
             request.getSession().setAttribute("user", user);
         }
-        List<QuestionDTO> questionList = questionService.findAllQuestions();
-        model.addAttribute("questions", questionList);
+        // 找到所有已经发布的问题，并放入model中
+        PaginationDTO pagination = questionService.findAllQuestions(page, size);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 }
