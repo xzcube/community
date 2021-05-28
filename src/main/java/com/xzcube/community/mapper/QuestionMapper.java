@@ -1,5 +1,6 @@
 package com.xzcube.community.mapper;
 
+import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,4 +30,10 @@ public interface QuestionMapper {
      */
     @Select("select count(1) from question")
     Integer count();
+
+    @Select("select * from question where creator = #{creator} limit #{offset}, #{size}")
+    List<Question> findByCreator(@Param("creator") Integer creator, @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+    @Select("select count(1) from question where creator = #{creator}")
+    Integer countByCreator(@Param("creator") Integer creator);
 }

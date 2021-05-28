@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+
+
+<!--头部开始-->
+<nav class="navbar navbar-default" th:fragment="commonHead">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">java营地</span>
+            </button>
+            <a class="navbar-brand" href="/">java营地</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索话题">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.user != null}">
+                    <a href="/publish">发布新的话题</a>
+                </li>
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        [[${session.user.name}]] <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">消息中心</a></li>
+                        <li><a href="/profile/questions">我的话题</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">退出登录</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="https://gitee.com/oauth/authorize?client_id=f7425bc7ee111e40a70a5cf425be9d32eb47dcbe25b5b9617ef3229fa32984e1&redirect_uri=http://localhost:8080/callback&response_type=code&state=1">登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--头部结束-->
+
+<!--话题展示开始-->
+<div class="media" th:each="question:${pagination.questions}" th:fragment="conversation">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object" th:src="${question.user.avatarUrl}">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading" th:text="${question.title}">快速学会SpringBoot</h4>
+        <span th:text="${question.description}" class="description"></span><br>
+        <span class="text-desc">[[${question.commentCount}]] 个回复 · [[${question.viewCount}]] 次浏览 · <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span></span>
+    </div>
+</div>
+<!--话题展示结束-->

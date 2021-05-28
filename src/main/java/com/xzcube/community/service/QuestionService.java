@@ -4,6 +4,7 @@ import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ public interface QuestionService {
 
 
     PaginationDTO findAllQuestions(Integer page, Integer size);
+
+    PaginationDTO findByCreator(Integer creator, Integer page, Integer size);
 }
