@@ -37,12 +37,10 @@ public class PublishController {
 
     /**
      * 发布话题功能
-     * @param title
-     * @param description
-     * @param tag
-     * @param questionId
-     * @param request
-     * @param model
+     * @param title 标题
+     * @param description 问题详情
+     * @param tag 标签
+     * @param questionId 数据库中的id
      * @return
      */
     @PostMapping("/publish")
@@ -88,6 +86,10 @@ public class PublishController {
         question.setId(questionId);
 
         if(user == null){
+            if(questionId == 0)
+                model.addAttribute("action", "发布");
+            else
+                model.addAttribute("action", "修改");
             model.addAttribute("error", "您尚未登录");
             return "publish";
         }
