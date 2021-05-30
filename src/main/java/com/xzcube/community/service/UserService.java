@@ -14,4 +14,7 @@ public interface UserService {
 
     User findByToken(String token);
 
+    User findById(Integer id);
+
+    void createOrUpdate(User user);
 }

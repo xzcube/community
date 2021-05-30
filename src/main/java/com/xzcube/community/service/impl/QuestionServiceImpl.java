@@ -9,6 +9,7 @@ import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionMapper questionMapper;
     @Autowired(required = false)
     UserMapper userMapper;
+
     PaginationDTO paginationDTO;
 
     @Override
@@ -49,6 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
             offset = size * (page - i);
             i++;
         }
+        offset = Math.max(offset, 0);
         List<Question> questions = questionMapper.findAllQuestions(offset, size);
 
         return setPaginationDTO(totalCount, page, size, questions);
@@ -68,6 +71,24 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questions = questionMapper.findByCreator(creator, offset, size);
 
         return setPaginationDTO(totalCount, page, size, questions);
+    }
+
+    /**
+     * 通过 question 的id寻找到相应的question，然后寻找到相应的user，封装到questionDTO中
+     * @param id
+     * @return
+     */
+    @Override
+    public QuestionDTO findById(Integer id) {
+        Question question = questionMapper.findById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+
+        // 通过question的creator寻找到相应的user
+        Integer creator = question.getCreator();
+        User user = userMapper.findById(creator);
+        questionDTO.setUser(user);
+        return questionDTO;
     }
 
     /**

@@ -18,4 +18,6 @@ public interface QuestionService {
     PaginationDTO findAllQuestions(Integer page, Integer size);
 
     PaginationDTO findByCreator(Integer creator, Integer page, Integer size);
+
+    QuestionDTO findById(Integer id);
 }

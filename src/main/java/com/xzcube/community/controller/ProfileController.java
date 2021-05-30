@@ -24,14 +24,22 @@ public class ProfileController {
     @Autowired
     QuestionService questionService;
 
+    /**
+     * 处理 个人中心 请求
+     * @param action 当前操作 action == questions:我的话题  action == replies:最新回复
+     * @param model
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action,
-                          HttpServletRequest request,
+                          @RequestParam(name = "userId") Integer userId,
                           Model model,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "5") Integer size){
 
-        User user = (User) request.getSession().getAttribute("user");
+        User user = userService.findById(userId);
 
         if(user == null){
             return "redirect:/";
@@ -45,6 +53,7 @@ public class ProfileController {
         }
         PaginationDTO paginationDTO = questionService.findByCreator(user.getId(), page, size);
         model.addAttribute("pagination", paginationDTO);
+        model.addAttribute("userById", user); // 将根据 id 查询到的user放入model中
         return "profile";
     }
 }

@@ -24,4 +24,25 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.findByToken(token);
     }
+
+    @Override
+    public User findById(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
+    public void createOrUpdate(User user) {
+        User dbUser = userMapper.findByAccountId(user.getAccountId());
+        if(dbUser == null){ // 说明数据库中没有该用户，插入该用户数据
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
+        }else { // 更新数据库信息
+            dbUser.setGmtModified(System.currentTimeMillis());
+            dbUser.setAvatarUrl(user.getAvatarUrl());
+            dbUser.setName(user.getName());
+            dbUser.setToken(user.getToken());
+            userMapper.update(dbUser);
+        }
+    }
 }
