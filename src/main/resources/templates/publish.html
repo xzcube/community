@@ -5,23 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <title>发布——java营地</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="css/community.css"/>
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link th:replace="common.html::head"/>
 </head>
 <body>
 <!--头部开始-->
 <nav th:replace="common.html:: commonHead"></nav>
 <!--头部结束-->
+
 <div class="container-fluid main">
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
             <h3>
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp 发起
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp [[${action}]]
             </h3>
             <form action="/publish" method="post">
+                <input type="hidden" name="questionId" th:value="${questionId}"/>
                 <hr>
                 <div class="form-group">
                     <label for="title">问题标题（简明扼要）</label>
@@ -36,7 +34,7 @@
                     <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag" placeholder="输入标签，以逗号隔开" required="required" maxlength="50">
                 </div>
                 <br>
-                <button type="submit" class="btn btn-success btn-publish">发布</button>
+                <button type="submit" class="btn btn-success btn-publish">[[${action}]]</button>
                 <span class="alert alert-danger" th:if="${error != null}" th:text="${error}"></span>
             </form>
         </div>

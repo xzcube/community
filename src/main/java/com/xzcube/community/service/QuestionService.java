@@ -20,4 +20,10 @@ public interface QuestionService {
     PaginationDTO findByCreator(Integer creator, Integer page, Integer size);
 
     QuestionDTO findById(Integer id);
+
+    /**
+     * 如果已经存在，则修改相应的question，如果不存在，则添加该question
+     * @param question
+     */
+    void createOrUpdate(Question question);
 }

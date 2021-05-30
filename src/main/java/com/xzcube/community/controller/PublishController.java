@@ -1,5 +1,7 @@
 package com.xzcube.community.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
@@ -8,9 +10,7 @@ import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author xzcube
  * @date 2021/5/26 16:07
- * 跳转到发布页面 get则是渲染页面，post则是处理请求
+ * 跳转到发布页面 get则是渲染页面，post则是处理请求(完成发布功能)
  */
 @Controller
 public class PublishController {
@@ -28,14 +28,28 @@ public class PublishController {
     UserService userService;
 
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("action", "发布");
+        // 如果是发布问题，就将表单中的隐藏域 questionId 设置为 0
+        model.addAttribute("questionId", 0);
         return "publish";
     }
 
+    /**
+     * 发布话题功能
+     * @param title
+     * @param description
+     * @param tag
+     * @param questionId
+     * @param request
+     * @param model
+     * @return
+     */
     @PostMapping("/publish")
     public String doPublish(@RequestParam(value = "title", required = false) String title,
                             @RequestParam(value = "description", required = false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
+                            @RequestParam(value = "questionId", required = false) Integer questionId,
                             HttpServletRequest request,
                             Model model){
         model.addAttribute("title", title);
@@ -71,16 +85,37 @@ public class PublishController {
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
+        question.setId(questionId);
 
         if(user == null){
             model.addAttribute("error", "您尚未登录");
             return "publish";
         }
         question.setCreator(user.getId()); // 将user的id作为question的creator传入
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
 
-        questionService.create(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
+    }
+
+    /**
+     * 根据question的id找到相应的question，然后渲染到前端
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id") Integer id,
+                       Model model){
+        if(id == null){
+            return "publish";
+        }
+        model.addAttribute("action", "修改");
+        QuestionDTO questionDTO = questionService.findById(id);
+        model.addAttribute("title", questionDTO.getTitle());
+        model.addAttribute("description", questionDTO.getDescription());
+        model.addAttribute("tag", questionDTO.getTag());
+        //将question的id传入前端表单，然后在隐藏域中提交
+        model.addAttribute("questionId", id);
+        return "publish";
     }
 }

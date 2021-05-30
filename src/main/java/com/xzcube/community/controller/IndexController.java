@@ -1,7 +1,7 @@
 package com.xzcube.community.controller;
 
 import com.xzcube.community.dto.PaginationDTO;
-import com.xzcube.community.model.User;
+
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

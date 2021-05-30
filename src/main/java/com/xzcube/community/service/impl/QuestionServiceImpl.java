@@ -91,6 +91,20 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDTO;
     }
 
+    @Override
+    public void createOrUpdate(Question question) {
+        if(question.getId() == 0){ // 如果提交上来的questionId是0，则将该question插入数据库
+            // 设置创建时间和修改时间
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }else {
+            // 设置修改时间，更新数据库信息
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.update(question);
+        }
+    }
+
     /**
      * 给 PaginationDTO对象赋值
      * @param totalCount 数据库中总话题数量
@@ -118,4 +132,6 @@ public class QuestionServiceImpl implements QuestionService {
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
     }
+
+
 }

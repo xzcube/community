@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.findById(id);
     }
 
+    /**
+     * 如果数据库中没有该用户，则插入数据库，如果存在，就更新用户信息
+     * @param user
+     */
     @Override
     public void createOrUpdate(User user) {
         User dbUser = userMapper.findByAccountId(user.getAccountId());
