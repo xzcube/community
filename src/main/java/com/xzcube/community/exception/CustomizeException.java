@@ -1,6 +1,5 @@
 package com.xzcube.community.exception;
 
-import lombok.Data;
 
 /**
  * @author xzcube

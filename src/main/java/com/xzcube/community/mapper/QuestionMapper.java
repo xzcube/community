@@ -1,6 +1,5 @@
 package com.xzcube.community.mapper;
 
-import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -39,4 +38,7 @@ public interface QuestionMapper {
 
     @Update("update question set title=#{title},  description=#{description}, gmt_modified=#{gmtModified}, tag=#{tag} where id=#{id}")
     void update(Question question);
+
+    @Update("update question set view_count=view_count+1 where id=#{id}")
+    void incView(@Param("id") Integer id);
 }

@@ -4,8 +4,6 @@ import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
 
 /**
  * @author xzcube
@@ -26,4 +24,6 @@ public interface QuestionService {
      * @param question
      */
     void createOrUpdate(Question question);
+
+    void incView(Integer id);
 }

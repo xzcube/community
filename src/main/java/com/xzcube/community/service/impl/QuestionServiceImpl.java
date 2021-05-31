@@ -11,7 +11,6 @@ import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -110,6 +109,12 @@ public class QuestionServiceImpl implements QuestionService {
         }
     }
 
+    //每次点击都让阅读量+1
+    @Override
+    public void incView(Integer id) {
+        questionMapper.incView(id);
+    }
+
     /**
      * 给 PaginationDTO对象赋值
      * @param totalCount 数据库中总话题数量
@@ -137,6 +142,4 @@ public class QuestionServiceImpl implements QuestionService {
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
     }
-
-
 }

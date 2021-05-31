@@ -1,6 +1,5 @@
 package com.xzcube.community.interfactor;
 
-import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

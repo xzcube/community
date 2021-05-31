@@ -26,7 +26,6 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
         return message;
     }
 
-
     private String message;
 
     CustomizeErrorCode(String message) {
