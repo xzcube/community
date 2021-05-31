@@ -18,7 +18,7 @@ public interface QuestionMapper {
             "(#{title}, #{description}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tag})")
     void create(Question question);
 
-    @Select("select * from question limit #{offset}, #{size}")
+    @Select("select * from question order by GMT_CREATE desc limit #{offset}, #{size}")
     List<Question> findAllQuestions(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     /**
@@ -28,7 +28,7 @@ public interface QuestionMapper {
     @Select("select count(1) from question")
     Integer count();
 
-    @Select("select * from question where creator = #{creator} limit #{offset}, #{size}")
+    @Select("select * from question where creator = #{creator} order by GMT_CREATE desc limit #{offset}, #{size}")
     List<Question> findByCreator(@Param("creator") Integer creator, @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     @Select("select count(1) from question where creator = #{creator}")
