@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>java营地</title>
+    <link th:replace="common.html::head"/>
+</head>
+<body>
+
+<div class="jumbotron">
+    <h1>出错啦！！！</h1>
+    <p th:text="${errorMessage}">服务器顶不住了，稍后再试试吧</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">回到首页</a></p>
+</div>
+</body>
+</html>

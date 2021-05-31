@@ -1,9 +1,6 @@
 package com.xzcube.community.service;
 
 import com.xzcube.community.model.User;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * @author xzcube

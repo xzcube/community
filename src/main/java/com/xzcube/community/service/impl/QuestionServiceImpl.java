@@ -2,6 +2,8 @@ package com.xzcube.community.service.impl;
 
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
+import com.xzcube.community.exception.CustomizeErrorCode;
+import com.xzcube.community.exception.CustomizeException;
 import com.xzcube.community.mapper.QuestionMapper;
 import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
@@ -81,6 +83,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDTO findById(Integer id) {
         Question question = questionMapper.findById(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
 
