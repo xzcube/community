@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 public class GitHubUser {
     private Integer id;
     private String name;
