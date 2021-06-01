@@ -5,7 +5,6 @@ import com.xzcube.community.exception.CustomizeException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 /**
  * @author xzcube
@@ -33,6 +32,4 @@ public class ResultDTO {
     public static ResultDTO okOf(){
         return new ResultDTO(200, "请求成功");
     }
-
-
 }

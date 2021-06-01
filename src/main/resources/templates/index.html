@@ -6,6 +6,16 @@
     <title>java营地</title>
     <link th:replace="common.html::head"/>
 </head>
+<script type="application/javascript">
+    window.onload = function () { // 页面加载完毕后调用
+        let closable = window.localStorage.getItem("closable"); // 从localStorage中获取 closable
+        if(closable === "true"){ // 如果是true，就将首页关闭，然后将参数移除
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
+
 <body>
 <!--头部开始-->
 <nav th:replace="common.html:: commonHead"></nav>
@@ -56,6 +66,11 @@
         </div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <h3>热门话题</h3><br>
+            <ur>
+                <li th:each="hotQuestion:${hotQuestions}">
+                    <a th:href="@{/question/{question}(question=${hotQuestion.id})}" th:text="${hotQuestion.title}"></a>
+                </li>
+            </ur>
         </div>
     </div>
 </div>

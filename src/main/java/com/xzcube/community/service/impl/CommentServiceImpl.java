@@ -25,6 +25,7 @@ public class CommentServiceImpl implements CommentService {
     QuestionMapper questionMapper;
 
     @Override
+    @Transactional // 把整个方法体包裹在事务中
     public void insert(Comment comment) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
@@ -49,6 +50,5 @@ public class CommentServiceImpl implements CommentService {
             questionMapper.incComment(comment.getParentId()); // 评论数+1
         }
     }
-
 
 }

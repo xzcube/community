@@ -2,6 +2,7 @@ package com.xzcube.community.controller;
 
 import com.xzcube.community.dto.PaginationDTO;
 
+import com.xzcube.community.model.Question;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @author xzcube
@@ -35,7 +38,9 @@ public class IndexController {
 
         // 找到所有已经发布的问题，并放入model中
         PaginationDTO pagination = questionService.findAllQuestions(page, size);
+        List<Question> hotQuestions = questionService.findHotQuestion(0, 4); // 查询浏览数最多的四个话题
         model.addAttribute("pagination", pagination);
+        model.addAttribute("hotQuestions", hotQuestions);
         return "index";
     }
 }

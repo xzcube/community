@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -33,6 +31,7 @@ public class CommentController {
     public Object post(@RequestBody CommentDTO commentDTO,
                        HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
+
         if(user.getId() == null){
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }

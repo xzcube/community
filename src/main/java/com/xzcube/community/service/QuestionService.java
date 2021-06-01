@@ -4,6 +4,8 @@ import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 
+import java.util.List;
+
 
 /**
  * @author xzcube
@@ -26,4 +28,6 @@ public interface QuestionService {
     void createOrUpdate(Question question);
 
     void incView(Integer id);
+
+    List<Question> findHotQuestion(Integer offset, Integer count);
 }

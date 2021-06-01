@@ -24,15 +24,36 @@
             </span>
             <hr>
             <a th:href="'/publish/' + ${questionDTO.id}" class="community-menu" th:if="${session.user.id == questionDTO.creator}">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true">
-                    编辑
-                </span>
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                编辑
             </a>
             <br>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" th:text="${questionDTO.description}">
-
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" th:text="${questionDTO.description}"></div>
+            <br>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><hr></div>
+            <br>
+            <!--回复开始-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="comment_section">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${session.user.id != null ? session.user.avatarUrl:'/images/default-avatar.png'}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span th:text="${session.user.id != null ? session.user.name:'anonymous user'}"> </span>
+                        </h4>
+                    </div>
+                </div>
+                <input type="hidden" id="question_id" th:value="${questionDTO.id}">
+                <textarea class="form-control comment" id="comment_content" rows="6" maxlength="1000"></textarea>
+                <button type="button" class="btn btn-success btn-publish btn-comment" onclick="post()">回复</button>
             </div>
+            <!--回复结束-->
         </div>
+
+        <!--右边侧栏开始-->
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <h3>发起人</h3>
             <div class="media">
@@ -53,6 +74,7 @@
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <h3>相关问题</h3>
         </div>
+        <!--右边侧栏结束-->
     </div>
 </div>
 </body>

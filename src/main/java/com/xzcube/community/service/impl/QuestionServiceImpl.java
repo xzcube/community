@@ -115,6 +115,11 @@ public class QuestionServiceImpl implements QuestionService {
         questionMapper.incView(id);
     }
 
+    @Override
+    public List<Question> findHotQuestion(Integer offset, Integer count) {
+        return questionMapper.findHotQuestions(offset, count);
+    }
+
     /**
      * 给 PaginationDTO对象赋值
      * @param totalCount 数据库中总话题数量

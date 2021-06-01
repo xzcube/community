@@ -5,8 +5,7 @@ import com.xzcube.community.dto.ResultDTO;
 
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.exception.CustomizeException;
-import lombok.val;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,7 +31,6 @@ public class CustomizeErrorException {
     Object exceptionHandler(HttpServletRequest request, Throwable e, Model model,
                             HttpServletResponse response){
 
-        HttpStatus status = getStatus(request);
         String contentType = request.getContentType();
         if("application/json".equals(contentType)){
             ResultDTO resultDTO;
@@ -64,13 +62,5 @@ public class CustomizeErrorException {
             }
             return new ModelAndView("error");
         }
-    }
-
-    private HttpStatus getStatus(HttpServletRequest request){
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        if(statusCode == null){
-            return HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return HttpStatus.valueOf(statusCode);
     }
 }
