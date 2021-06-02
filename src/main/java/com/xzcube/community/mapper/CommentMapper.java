@@ -1,6 +1,7 @@
 package com.xzcube.community.mapper;
 
 import com.xzcube.community.model.Comment;
+import com.xzcube.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,4 +33,10 @@ public interface CommentMapper {
      */
     @Select("select * from comment where parent_id=#{parentId} order by like_count desc")
     List<Comment> findListByParentId(@Param("parentId") Integer parentId);
+
+    @Select("select count(1) from comment where parent_id=#{parentId}")
+    Integer commentCount(@Param("parentId") Integer parentId);
+
+    @Select("select * from comment where parent_id = #{parentId} order by GMT_CREATE desc limit #{offset}, 4")
+    List<Comment> findByQuestionId(@Param("parentId") Integer parentId, @Param(value = "offset") Integer offset);
 }

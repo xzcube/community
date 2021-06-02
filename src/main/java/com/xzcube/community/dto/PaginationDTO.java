@@ -21,6 +21,7 @@ public class PaginationDTO {
     private boolean showFirstPage;  // 是否展示跳转首页按钮
     private boolean showNextPage; // 是否展示后一页按钮
     private boolean showLastPage; // 是否展示跳转尾页按钮
+    private List<CommentShowDTO> showComment; // 每页展示的评论
 
     private Integer page; // 当前页码
     private List<Integer> pages = new ArrayList<>(); // 当前分页条中展示的页码

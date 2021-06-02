@@ -1,6 +1,7 @@
 package com.xzcube.community.service.impl;
 
 import com.xzcube.community.dto.CommentShowDTO;
+import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.exception.CustomizeException;
@@ -32,6 +33,7 @@ public class CommentServiceImpl implements CommentService {
     QuestionMapper questionMapper;
     @Autowired(required = false)
     UserMapper userMapper;
+    Integer size = 4;
 
     @Override
     @Transactional // 把整个方法体包裹在事务中
@@ -61,7 +63,31 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentShowDTO> listByQuestionId(Integer id) {
+    public PaginationDTO listByQuestionId(Integer id, Integer page) {
+        // 页面展示的偏移量
+        int offset = size * (page - 1);
+        Integer totalCount = commentMapper.commentCount(id); // 数据库中所有话题数量
+        int i = 2;
+        while(offset >= totalCount){
+            offset = size * (page - i);
+            i++;
+        }
+        offset = Math.max(offset, 0);
+        List<Comment> commentList = commentMapper.findByQuestionId(id, offset);
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setPagination(totalCount, page, size);
+        List<CommentShowDTO> commentShowDTOList = commentList.stream().map(comment -> {
+            CommentShowDTO commentShowDTO = new CommentShowDTO();
+            BeanUtils.copyProperties(comment, commentShowDTO);
+            commentShowDTO.setUser(userMapper.findById(comment.getCommentator()));
+            return commentShowDTO;
+        }).collect(Collectors.toList());
+        paginationDTO.setShowComment(commentShowDTOList);
+        return paginationDTO;
+    }
+
+
+    /*public List<CommentShowDTO> listByQuestionId(Integer id) {
         List<Comment> comments = commentMapper.findListByParentId(id);
         if(comments.size() == 0){
             return new ArrayList<>();
@@ -74,5 +100,5 @@ public class CommentServiceImpl implements CommentService {
             return commentShowDTO;
         }).collect(Collectors.toList());
         return commentShowDTOList;
-    }
+    }*/
 }
