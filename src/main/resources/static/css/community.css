@@ -73,12 +73,29 @@ body{
     margin-right: 10px;
 }
 
+
 .commentMenu .icon{
     margin-right: 5px;
     font-size: 15px;
     cursor: pointer;
 }
 
+.commentMenu .active{
+    color: #499ef3;
+}
+
 .commentMenu .icon:hover{
     color: #499ef3;
+}
+
+.sub-comment{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.sub-comment .btn{
+    margin: 10px 0;
 }

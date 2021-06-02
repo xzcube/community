@@ -16,4 +16,6 @@ public interface CommentService {
 
     PaginationDTO listByQuestionId(Integer id, Integer page);
 
+    List<CommentShowDTO> listByCommentId(Integer id, Integer type);
+
 }

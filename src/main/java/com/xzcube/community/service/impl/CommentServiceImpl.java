@@ -1,5 +1,6 @@
 package com.xzcube.community.service.impl;
 
+import com.xzcube.community.dto.CommentDTO;
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
@@ -86,19 +87,21 @@ public class CommentServiceImpl implements CommentService {
         return paginationDTO;
     }
 
-
-    /*public List<CommentShowDTO> listByQuestionId(Integer id) {
-        List<Comment> comments = commentMapper.findListByParentId(id);
-        if(comments.size() == 0){
-            return new ArrayList<>();
-        }
-        // 将所有comment封装成commentShowDTO(注意这里用到了stream api和方法引用)
-        List<CommentShowDTO> commentShowDTOList = comments.stream().map(comment -> {
-            CommentShowDTO commentShowDTO = new CommentShowDTO();
-            BeanUtils.copyProperties(comment, commentShowDTO);
-            commentShowDTO.setUser(userMapper.findById(comment.getCommentator()));
-            return commentShowDTO;
+    /**
+     * 获取二级评论
+     * @param id
+     * @return
+     */
+    @Override
+    public List<CommentShowDTO> listByCommentId(Integer id, Integer type) {
+        List<Comment> commentList = commentMapper.findByCommentId(id, type);
+        List<CommentShowDTO> commentShowDTOList = commentList.stream().map(comment -> {
+           CommentShowDTO commentShowDTO = new CommentShowDTO();
+           BeanUtils.copyProperties(comment, commentShowDTO);
+           commentShowDTO.setUser(userMapper.findById(comment.getCommentator()));
+           return commentShowDTO;
         }).collect(Collectors.toList());
         return commentShowDTOList;
-    }*/
+    }
+
 }

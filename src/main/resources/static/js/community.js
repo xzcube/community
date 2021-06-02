@@ -1,7 +1,14 @@
+/**
+ * 提交回复
+ */
 function post() {
     let questionId = $("#question_id").val();
     let content = $("#comment_content").val();
     let commentator = $("#question_creator").val();
+    comment2target(questionId, 1, content, commentator);
+}
+
+function comment2target(targetId, type, content, commentator) {
     if(content === ""){ // content不能是空串
         alert("请输入评论");
         return;
@@ -10,9 +17,9 @@ function post() {
         type: "POST",
         url: "/comment",
         data: JSON.stringify({ // 将js对象转换为json
-            "parentId": questionId,
+            "parentId": targetId,
             "content": content,
-            "type": 1,
+            "type": type,
             "creator": commentator
         }),
         contentType: "application/json",
@@ -31,4 +38,31 @@ function post() {
         },
         dataType: "json"
     });
+}
+
+function comment(e) {
+    let commentId = e.getAttribute("data-id"); // 页面将commentId存储在data-id里面了，在这里取出
+    let commentator = $("#comment_creator").val();
+    let content = $("#input-" + commentId).val();
+    comment2target(commentId, 2, content, commentator);
+}
+
+/**
+ * 展开二级评论
+ */
+function collapseComments(e) {
+    let id = e.getAttribute("data-id"); // 页面将commentId存储在data-id里面了，在这里取出
+    let comment = $("#comment-" + id); // 取出id为comment-id的对象
+
+    // 获取二级评论展开状态
+    let attribute = e.getAttribute("data-collapse");
+    if(attribute){ // 获取到了"data-collapse"属性，说明是展开状态，删除该属性，闭合二级评论
+        comment.removeClass("in");
+        e.removeAttribute("data-collapse");
+        e.classList.remove("active"); // 移除高亮
+    }else {
+        comment.addClass("in"); // 在class中加入in，展开二级评论
+        e.setAttribute("data-collapse", "in"); // 标记二级评论展开状态
+        e.classList.add("active"); // 添加高亮
+    }
 }

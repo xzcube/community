@@ -1,22 +1,20 @@
 package com.xzcube.community.controller;
 
 import com.xzcube.community.dto.CommentDTO;
-
+import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.ResultDTO;
+import com.xzcube.community.enums.CommentTypeEnum;
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.model.Comment;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.CommentService;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -28,6 +26,12 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * 发布二级评论
+     * @param commentDTO 对应一级评论的id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @ResponseBody
     public Object post(@RequestBody CommentDTO commentDTO,
@@ -52,5 +56,17 @@ public class CommentController {
         comment.setCommentator(commentDTO.getCreator());
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+
+    /**
+     * 展示二级评论
+     * @return
+     */
+    @GetMapping("/comment/{id}")
+    @ResponseBody
+    public ResultDTO<List> comments(@PathVariable("id") Integer patentId){
+        List<CommentShowDTO> commentShowDTOList = commentService.listByCommentId(patentId, CommentTypeEnum.COMMENT.getType());
+
+        return ResultDTO.okOf(commentShowDTOList);
     }
 }

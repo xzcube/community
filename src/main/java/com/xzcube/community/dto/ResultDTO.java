@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author xzcube
  * @date 2021/5/31 19:35
@@ -13,9 +15,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultDTO {
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private T data; // 传递一个泛型类的数据
+
+    public ResultDTO(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
     /**
      * 自定义错误码和错误信息
@@ -28,8 +36,17 @@ public class ResultDTO {
     public static ResultDTO errorOf(CustomizeException e){
         return new ResultDTO(e.getCode(), e.getMessage());
     }
-
     public static ResultDTO okOf(){
         return new ResultDTO(200, "请求成功");
+    }
+
+    /**
+     * 带有返回参数的成功请求
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public static <T> ResultDTO okOf(T t){
+        return new ResultDTO(200, "请求成功", t);
     }
 }
