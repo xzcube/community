@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author xzcube
  * @date 2021/5/31 16:08
+ * 发布评论时的DTO
  */
 @Component
 @Data

@@ -1,6 +1,10 @@
 package com.xzcube.community.service;
 
+import com.xzcube.community.dto.CommentDTO;
+import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.model.Comment;
+
+import java.util.List;
 
 /**
  * @author xzcube
@@ -8,4 +12,6 @@ import com.xzcube.community.model.Comment;
  */
 public interface CommentService {
     void insert(Comment comment);
+
+    List<CommentShowDTO> listByQuestionId(Integer id);
 }

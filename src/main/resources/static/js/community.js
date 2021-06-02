@@ -16,6 +16,7 @@ function post() {
         contentType: "application/json",
         success: function (response) {
             if(response.code === 200 && content !== "") { // 如果响应码是200，将回复框隐藏
+                window.open("/question/" + questionId);
                 $("#comment_section").hide();
             }else if(response.code === 2003){
                 let isAccepted = confirm(response.message);
@@ -29,6 +30,4 @@ function post() {
         },
         dataType: "json"
     });
-    console.log(questionId);
-    console.log(content);
 }

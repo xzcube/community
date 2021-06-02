@@ -54,3 +54,31 @@ body{
 .btn-comment{
     margin-bottom: 10px;
 }
+
+.comment-sp{
+    margin-top: 0;
+}
+
+.commentContent{
+    margin-bottom: 6px;
+}
+
+.img-rounded{
+    width: 30px;
+    height: 30px;
+}
+
+.commentMenu{
+    color: #999;
+    margin-right: 10px;
+}
+
+.commentMenu .icon{
+    margin-right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.commentMenu .icon:hover{
+    color: #499ef3;
+}

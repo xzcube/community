@@ -1,7 +1,12 @@
 package com.xzcube.community.mapper;
 
 import com.xzcube.community.model.Comment;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @author xzcube
@@ -13,6 +18,18 @@ public interface CommentMapper {
             "values(#{parentId}, #{type}, #{commentator}, #{gmtCreate}, #{gmtModified}, #{content})")
     void insert(Comment comment);
 
+    /**
+     * 通过二级评论的parentId寻找到相应的一级评论
+     * @param parentId
+     * @return
+     */
     @Select("select * from comment where id=#{parentId}")
     Comment findByParentId(@Param("parentId") Integer parentId);
+
+    /**
+     * question的id就是底下评论的parentId，可以根据当前question的id查询到它的一级评论
+     * @return
+     */
+    @Select("select * from comment where parent_id=#{parentId} order by like_count desc")
+    List<Comment> findListByParentId(@Param("parentId") Integer parentId);
 }
