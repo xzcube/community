@@ -107,3 +107,11 @@ body{
 .question-tag{
     margin-right: 5px;
 }
+
+.question-related{
+    line-height: 25px;
+    font-size: 14px;
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
