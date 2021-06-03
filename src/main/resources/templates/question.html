@@ -52,14 +52,14 @@
                                 <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
                             </a>
                         </div>
-                        <div class="media-body" th:id="${'comment-body-'+comment.id}"> <!--这一行就是出现bug的原因-->
+                        <div class="media-body" th:id="${'comment-body-'+comment.id}">
                             <h5 class="media-heading">
                                 <span th:text="${comment.user.name}"> </span>
                             </h5>
                             <div class="commentContent" th:text="${comment.content}"></div>
                             <div class="commentMenu">
                                 <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}"
-                                      onclick="collapseComments(this)">[[${comment.commentCount}]]</span>&nbsp|&nbsp
+                                      onclick="collapseComments(this)"></span><span>[[${comment.commentCount}]]</span>&nbsp|&nbsp
 
                                 <span class="glyphicon glyphicon-thumbs-up icon"></span><span th:text="${comment.likeCount}"></span>
                                 <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
