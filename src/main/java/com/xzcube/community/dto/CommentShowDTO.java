@@ -18,6 +18,7 @@ public class CommentShowDTO {
     private Long gmtModified;
     private String content;
     private Long likeCount;
+    private Integer commentCount;
 
     private User user;
 }

@@ -18,4 +18,5 @@ public interface CommentService {
 
     List<CommentShowDTO> listByCommentId(Integer id, Integer type);
 
+    void incCommentCount(Integer parentId);
 }

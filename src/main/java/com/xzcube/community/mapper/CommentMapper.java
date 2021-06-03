@@ -2,10 +2,7 @@ package com.xzcube.community.mapper;
 
 import com.xzcube.community.model.Comment;
 import com.xzcube.community.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -42,4 +39,7 @@ public interface CommentMapper {
 
     @Select("select * from comment where parent_id = #{parentId} and type=#{type} order by GMT_CREATE desc")
     List<Comment> findByCommentId(@Param("parentId") Integer parentId, @Param("type") Integer type);
+
+    @Update("update comment set comment_count=comment_count+1 where id=#{parentId}")
+    void incCommentId(@Param("parentId") Integer parentId);
 }

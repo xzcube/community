@@ -52,36 +52,60 @@ function comment(e) {
  */
 function collapseComments(e) {
     let id = e.getAttribute("data-id"); // 页面将commentId存储在data-id里面了，在这里取出
-    let comment = $("#comment-" + id); // 取出id为comment-id的对象
+    let comments = $("#comment-" + id); // 取出id为comment-id的对象
 
     // 获取二级评论展开状态
     let attribute = e.getAttribute("data-collapse");
     if(attribute){ // 获取到了"data-collapse"属性，说明是展开状态，删除该属性，闭合二级评论
-        comment.removeClass("in");
+        comments.removeClass("in");
         e.removeAttribute("data-collapse");
         e.classList.remove("active"); // 移除高亮
     }else {
-        $.getJSON( "/comment/" + id, function( data ) {
-            let commentBody = $("#comment-body" + id);
-            let items = [];
+        let subCommentContainer = $("#comment-" + id);
+        comments.addClass("in"); // 在class中加入in，展开二级评论
+        e.setAttribute("data-collapse", "in"); // 标记二级评论展开状态
+        e.classList.add("active"); // 添加高亮
 
-            $.each( data.data, function(comment) {
-                var c = $("<div/>", {
-                    "class":"col-xs-12 col-sm-12 col-md-12 col-lg-12 comments",
-                    html: comment.content
+        // 如果里面的元素个数为1，说明只有一个回复框，就获取数据追加显示在页面上（没有这个判断，每次点击二级回复按钮都会重复追加显示回复内容）
+        if(subCommentContainer.children().length === 1){
+            $.getJSON( "/comment/" + id, function( data ) {
+
+                // 追加显示二级回复的标签和内容（用js手写页面 强）
+                $.each( data.data, function(index, comment) {
+
+                    let mediaLeftElement = $("<div/>", {
+                       "class":"media-left"
+                    }).append($("<img>", {
+                        "class":"media-object img-rounded comments",
+                        "src":comment.user.avatarUrl
+                    }));
+
+                    let mediaBodyElement = $("<div/>", {
+                        "class":"media-body"
+                    }).append($("<h5>", {
+                        "class":"media-heading",
+                        "html":comment.user.name
+                    })).append($("<h5>", {
+                        "class":"commentContent",
+                        "html":comment.content
+                    })).append($("<div/>", {
+                        "class":"commentMenu",
+                    })).append($("<div/>", {
+                        "class":"pull-right commentMenu",
+                        "html":moment(comment.gmtCreate).format('YYYY-MM-DD')
+                    }));
+
+                    let mediaElement = $("<div/>", {
+                        "class":"media"
+                    }).append(mediaLeftElement).append(mediaBodyElement);
+
+                    const commentElement = $("<div/>", {
+                        "class": "col-xs-12 col-sm-12 col-md-12 col-lg-12 comments"
+                    }).append(mediaElement);
+                    subCommentContainer.prepend(commentElement);
                 });
-                items.push(c);
+
             });
-
-            commentBody.append($("<div/>", {
-                "class":"col-xs-12 col-sm-12 col-md-12 col-lg-12 collapse sub-comment",
-                "id":"comment-" + id,
-                html: items.join("")
-            }));
-
-            comment.addClass("in"); // 在class中加入in，展开二级评论
-            e.setAttribute("data-collapse", "in"); // 标记二级评论展开状态
-            e.classList.add("active"); // 添加高亮
-        });
+        }
     }
 }

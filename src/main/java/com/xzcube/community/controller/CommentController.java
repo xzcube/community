@@ -46,6 +46,7 @@ public class CommentController {
             return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
 
+        commentService.incCommentCount(commentDTO.getParentId());
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
         comment.setContent(commentDTO.getContent());

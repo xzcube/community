@@ -104,4 +104,9 @@ public class CommentServiceImpl implements CommentService {
         return commentShowDTOList;
     }
 
+    @Override
+    public void incCommentCount(Integer parentId) {
+        commentMapper.incCommentId(parentId);
+    }
+
 }
