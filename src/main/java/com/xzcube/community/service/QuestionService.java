@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2021/5/26 22:16
  */
 public interface QuestionService {
-    public void create(Question question);
+    void create(Question question);
 
 
     PaginationDTO findAllQuestions(Integer page, Integer size);

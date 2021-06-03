@@ -47,4 +47,5 @@ public interface QuestionMapper {
 
     @Select("select id, title from question ORDER BY view_count DESC LIMIT #{offset}, #{count}")
     List<Question> findHotQuestions(@Param(value = "offset") Integer offset, @Param(value = "count") Integer count);
+
 }

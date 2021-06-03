@@ -1,6 +1,5 @@
 package com.xzcube.community.service.impl;
 
-import com.xzcube.community.dto.CommentDTO;
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
