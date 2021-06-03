@@ -68,16 +68,16 @@ function collapseComments(e) {
             $.each( data.data, function(comment) {
                 var c = $("<div/>", {
                     "class":"col-xs-12 col-sm-12 col-md-12 col-lg-12 comments",
-                    html: items.join("")
+                    html: comment.content
                 });
                 items.push(c);
             });
 
-            $("<div/>", {
+            commentBody.append($("<div/>", {
                 "class":"col-xs-12 col-sm-12 col-md-12 col-lg-12 collapse sub-comment",
                 "id":"comment-" + id,
                 html: items.join("")
-            }).appendTo(commentBody);
+            }));
 
             comment.addClass("in"); // 在class中加入in，展开二级评论
             e.setAttribute("data-collapse", "in"); // 标记二级评论展开状态
