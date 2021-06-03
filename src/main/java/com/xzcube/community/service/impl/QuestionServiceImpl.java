@@ -9,12 +9,16 @@ import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author xzcube
@@ -118,6 +122,29 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findHotQuestion(Integer offset, Integer count) {
         return questionMapper.findHotQuestions(offset, count);
+    }
+
+    /**
+     * 根据前端传入的QuestionDTO对象中的tag属性，查找相应的话题
+     * @param queryDTO QuestionDTO对象
+     * @return
+     */
+    @Override
+    public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
+        if(StringUtils.isBlank(queryDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String[] tags = StringUtils.split(queryDTO.getTag(), "[\\,\\，]");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+
+        List<Question> questions = questionMapper.selectRelated(queryDTO.getId(), regexpTag);
+
+        List<QuestionDTO> questionDTOList = questions.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOList;
     }
 
     /**

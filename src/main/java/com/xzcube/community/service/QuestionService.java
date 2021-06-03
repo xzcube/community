@@ -30,4 +30,6 @@ public interface QuestionService {
     void incView(Integer id);
 
     List<Question> findHotQuestion(Integer offset, Integer count);
+
+    List<QuestionDTO> selectRelated(QuestionDTO questionDTO);
 }
