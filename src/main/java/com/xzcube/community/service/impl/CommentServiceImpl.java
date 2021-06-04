@@ -2,6 +2,7 @@ package com.xzcube.community.service.impl;
 
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
+import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
 import com.xzcube.community.enums.NotificationEnum;
 import com.xzcube.community.enums.NotificationStatusEnum;
@@ -72,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * 创建通知
+     * 向数据库中插入一条通知信息
      * @param comment
      * @param receiver
      */
@@ -89,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PaginationDTO listByQuestionId(Integer id, Integer page) {
+    public PaginationDTO<CommentShowDTO> listByQuestionId(Integer id, Integer page) {
         // 页面展示的偏移量
         int offset = size * (page - 1);
         Integer totalCount = commentMapper.commentCount(id); // 数据库中所有话题数量
@@ -100,7 +101,7 @@ public class CommentServiceImpl implements CommentService {
         }
         offset = Math.max(offset, 0);
         List<Comment> commentList = commentMapper.findByQuestionId(id, offset);
-        PaginationDTO paginationDTO = new PaginationDTO();
+        PaginationDTO<CommentShowDTO> paginationDTO = new PaginationDTO();
         paginationDTO.setPagination(totalCount, page, size);
         List<CommentShowDTO> commentShowDTOList = commentList.stream().map(comment -> {
             CommentShowDTO commentShowDTO = new CommentShowDTO();
@@ -108,7 +109,7 @@ public class CommentServiceImpl implements CommentService {
             commentShowDTO.setUser(userMapper.findById(comment.getCommentator()));
             return commentShowDTO;
         }).collect(Collectors.toList());
-        paginationDTO.setShowComment(commentShowDTOList);
+        paginationDTO.setData(commentShowDTOList);
         return paginationDTO;
     }
 

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author xzcube
@@ -31,7 +30,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired(required = false)
     UserMapper userMapper;
 
-    PaginationDTO paginationDTO;
+    PaginationDTO<QuestionDTO> paginationDTO;
 
     @Override
     public void create(Question question) {
@@ -45,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param size 每页展示的话题数量
      */
     @Override
-    public PaginationDTO findAllQuestions(Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> findAllQuestions(Integer page, Integer size) {
         // 页面展示的偏移量
         int offset = size * (page - 1);
         offset = Math.max(offset, 0);
@@ -63,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PaginationDTO findByCreator(Integer creator, Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> findByCreator(Integer creator, Integer page, Integer size) {
         // 页面展示的偏移量
         int offset = size * (page - 1);
         Integer totalCount = questionMapper.countByCreator(creator); // 数据库中所有话题数量
@@ -155,11 +154,11 @@ public class QuestionServiceImpl implements QuestionService {
      * @param questions 当前展示的话题列表
      * @return
      */
-    public PaginationDTO setPaginationDTO(Integer totalCount,
+    public PaginationDTO<QuestionDTO> setPaginationDTO(Integer totalCount,
                                           Integer page,
                                           Integer size,
                                           List<Question> questions){
-        paginationDTO = new PaginationDTO();
+        paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size); // 给paginationDTO中的属性赋值
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
@@ -171,7 +170,7 @@ public class QuestionServiceImpl implements QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 }

@@ -1,7 +1,10 @@
 package com.xzcube.community.controller;
 
+import com.xzcube.community.dto.NotificationDTO;
 import com.xzcube.community.dto.PaginationDTO;
+import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.User;
+import com.xzcube.community.service.NotificationService;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProfileController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * 处理 个人中心 请求
@@ -45,12 +50,14 @@ public class ProfileController {
         if("questions".equals(action)){
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的话题");
+            PaginationDTO<QuestionDTO> paginationDTO = questionService.findByCreator(user.getId(), page, size);
+            model.addAttribute("pagination", paginationDTO);
         }else if("replies".equals(action)){
+
+            PaginationDTO<NotificationDTO> paginationDTO = notificationService.listByUserId(userId, page, size);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
         }
-        PaginationDTO paginationDTO = questionService.findByCreator(user.getId(), page, size);
-        model.addAttribute("pagination", paginationDTO);
         model.addAttribute("userById", user); // 将根据 id 查询到的user放入model中
         return "profile";
     }

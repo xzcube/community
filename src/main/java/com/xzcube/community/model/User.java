@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author xzcube
  * @date 2021/5/26 9:11
+ * 封装数据库中的用户类
  */
 @Data
 @AllArgsConstructor

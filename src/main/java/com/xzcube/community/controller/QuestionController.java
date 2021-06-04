@@ -1,5 +1,7 @@
 package com.xzcube.community.controller;
 
+import com.xzcube.community.dto.CommentDTO;
+import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.service.CommentService;
@@ -31,7 +33,7 @@ public class QuestionController {
         QuestionDTO questionDTO = questionService.findById(id);
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
 
-        PaginationDTO commentPage = commentService.listByQuestionId(id, pageNum);
+        PaginationDTO<CommentShowDTO> commentPage = commentService.listByQuestionId(id, pageNum);
 
         // 每次点击都让阅读量+1
         questionService.incView(id);

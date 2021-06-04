@@ -15,13 +15,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaginationDTO {
-    private List<QuestionDTO> questions; // 每页展示的话题
+public class PaginationDTO<T> {
+    private List<T> data; // 每页展示的话题
     private boolean showPrevious; // 是否展示前一页按钮
     private boolean showFirstPage;  // 是否展示跳转首页按钮
     private boolean showNextPage; // 是否展示后一页按钮
     private boolean showLastPage; // 是否展示跳转尾页按钮
-    private List<CommentShowDTO> showComment; // 每页展示的评论
+    //private List<CommentShowDTO> showComment; // 每页展示的评论
 
     private Integer page; // 当前页码
     private List<Integer> pages = new ArrayList<>(); // 当前分页条中展示的页码

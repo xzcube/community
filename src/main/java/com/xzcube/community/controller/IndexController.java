@@ -2,6 +2,7 @@ package com.xzcube.community.controller;
 
 import com.xzcube.community.dto.PaginationDTO;
 
+import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
@@ -37,7 +38,7 @@ public class IndexController {
         // 使用token获取user对象(在interceptor中实现了)
 
         // 找到所有已经发布的问题，并放入model中
-        PaginationDTO pagination = questionService.findAllQuestions(page, size);
+        PaginationDTO<QuestionDTO> pagination = questionService.findAllQuestions(page, size);
         List<Question> hotQuestions = questionService.findHotQuestion(0, 4); // 查询浏览数最多的四个话题
         model.addAttribute("pagination", pagination);
         model.addAttribute("hotQuestions", hotQuestions);

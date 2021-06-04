@@ -14,7 +14,7 @@ import java.util.List;
 public interface CommentService {
     void insert(Comment comment);
 
-    PaginationDTO listByQuestionId(Integer id, Integer page);
+    PaginationDTO<CommentShowDTO> listByQuestionId(Integer id, Integer page);
 
     List<CommentShowDTO> listByCommentId(Integer id, Integer type);
 
