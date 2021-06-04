@@ -4,6 +4,7 @@ import com.xzcube.community.dto.CommentDTO;
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.model.Comment;
+import com.xzcube.community.model.User;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @date 2021/5/31 16:15
  */
 public interface CommentService {
-    void insert(Comment comment);
+    void insert(Comment comment, User commentator);
 
     PaginationDTO<CommentShowDTO> listByQuestionId(Integer id, Integer page);
 

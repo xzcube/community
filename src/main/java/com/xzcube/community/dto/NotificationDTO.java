@@ -1,6 +1,5 @@
 package com.xzcube.community.dto;
 
-import com.xzcube.community.model.User;
 import lombok.Data;
 
 /**
@@ -13,7 +12,8 @@ public class NotificationDTO {
     private Long gmtCreate;
     private Integer status;
 
-    private User notifier; // 发送通知的人
+    private Integer notifier; // 发送通知的人
+    private String notifierName; // 发送通知者的用户名
     private String outerTitle;
-    private String type;
+    private String type; // 类型的名称
 }

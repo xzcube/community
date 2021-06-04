@@ -72,29 +72,9 @@
                                 <span class="glyphicon glyphicon-thumbs-up icon"></span><span th:text="${comment.likeCount}"></span>
                                 <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
                             </div>
-                            <!--二级评论开始-->
+                            <!--二级评论开始 内容由js文件手写追加进入-->
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 collapse sub-comment"
                                  th:id="'comment-' + ${comment.id}">
-                                <!--循环展示二级评论开始-->
-                                <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments" th:each="comment:${commentShowDTO.showComment}">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a th:href="@{/profile/questions/(userId=${comment.user.id}, page=1)}">
-                                                <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="media-heading" th:text="${comment.user.name}>
-                                            </h5>
-                                            <div class="commentContent" th:text="${comment.content}"></div>
-                                            <div class="commentMenu">
-                                                <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                </div>-->
-                                <!--循环展示二级评论结束-->
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <input type="hidden" id="comment_creator" th:value="${comment.user.id}">
                                     <input type="text" class="form-control" placeholder="评论一下..." th:id="'input-' + ${comment.id}">
@@ -156,6 +136,7 @@
                 </div>
                 <!--回复框结束-->
             </div>
+            <!--回复框结束-->
         </div>
 
         <!--右边侧栏开始-->

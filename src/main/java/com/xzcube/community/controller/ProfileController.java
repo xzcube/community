@@ -57,6 +57,8 @@ public class ProfileController {
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.listByUserId(userId, page, size);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
+            model.addAttribute("pagination", paginationDTO);
+
         }
         model.addAttribute("userById", user); // 将根据 id 查询到的user放入model中
         return "profile";

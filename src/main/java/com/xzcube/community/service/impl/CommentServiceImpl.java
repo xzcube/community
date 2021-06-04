@@ -14,6 +14,7 @@ import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Comment;
 import com.xzcube.community.model.Notification;
 import com.xzcube.community.model.Question;
+import com.xzcube.community.model.User;
 import com.xzcube.community.service.CommentService;
 import com.xzcube.community.utils.PageUtils;
 import org.springframework.beans.BeanUtils;
@@ -43,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional // 把整个方法体包裹在事务中
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
@@ -56,9 +57,15 @@ public class CommentServiceImpl implements CommentService {
             if(dbComment == null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
+            // 获得相关问题的对象
+            Question question = questionMapper.findById(comment.getParentId());
+            if(question == null){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
+
             commentMapper.insert(comment);
             questionMapper.incComment(comment.getParentId()); // 评论数+1
-            createNotify(comment, dbComment.getCommentator(), NotificationEnum.REPLY_COMMENT);
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_COMMENT);
 
         }else {
             // 回复问题
@@ -68,16 +75,21 @@ public class CommentServiceImpl implements CommentService {
             }
             commentMapper.insert(comment);
             questionMapper.incComment(comment.getParentId()); // 评论数+1
-            createNotify(comment, question.getCreator(), NotificationEnum.REPLY_QUESTION);
+            createNotify(comment, question.getCreator(), commentator.getName(),
+                    question.getTitle(), NotificationEnum.REPLY_QUESTION);
         }
     }
 
     /**
      * 向数据库中插入一条通知信息
-     * @param comment
-     * @param receiver
+     * @param comment 通知内容的对象
+     * @param receiver 接收通知者的id
+     * @param notifierName 发送通知者的用户名
+     * @param notificationType 通知类型
+     * @param outerTitle 被回复的话题的标题，如果是回复评论，则是该评论所在话题的标题
      */
     public void createNotify(Comment comment, Integer receiver,
+                             String notifierName, String outerTitle,
                              NotificationEnum notificationType){
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
@@ -86,6 +98,8 @@ public class CommentServiceImpl implements CommentService {
         notification.setNotifier(comment.getCommentator());
         notification.setReceiver(receiver);
         notification.setType(notificationType.getType());
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(outerTitle);
         notificationMapper.insert(notification);
     }
 
