@@ -3,12 +3,16 @@ package com.xzcube.community.service.impl;
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
+import com.xzcube.community.enums.NotificationEnum;
+import com.xzcube.community.enums.NotificationStatusEnum;
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.exception.CustomizeException;
 import com.xzcube.community.mapper.CommentMapper;
+import com.xzcube.community.mapper.NotificationMapper;
 import com.xzcube.community.mapper.QuestionMapper;
 import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Comment;
+import com.xzcube.community.model.Notification;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.service.CommentService;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +36,8 @@ public class CommentServiceImpl implements CommentService {
     QuestionMapper questionMapper;
     @Autowired(required = false)
     UserMapper userMapper;
+    @Autowired(required = false)
+    NotificationMapper notificationMapper;
     Integer size = 4;
 
     @Override
@@ -50,6 +56,9 @@ public class CommentServiceImpl implements CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            questionMapper.incComment(comment.getParentId()); // 评论数+1
+            createNotify(comment, dbComment.getCommentator(), NotificationEnum.REPLY_COMMENT);
+
         }else {
             // 回复问题
             Question question = questionMapper.findById(comment.getParentId());
@@ -58,7 +67,25 @@ public class CommentServiceImpl implements CommentService {
             }
             commentMapper.insert(comment);
             questionMapper.incComment(comment.getParentId()); // 评论数+1
+            createNotify(comment, question.getCreator(), NotificationEnum.REPLY_QUESTION);
         }
+    }
+
+    /**
+     * 创建通知
+     * @param comment
+     * @param receiver
+     */
+    public void createNotify(Comment comment, Integer receiver,
+                             NotificationEnum notificationType){
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setOuterId(comment.getParentId());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setNotifier(comment.getCommentator());
+        notification.setReceiver(receiver);
+        notification.setType(notificationType.getType());
+        notificationMapper.insert(notification);
     }
 
     @Override

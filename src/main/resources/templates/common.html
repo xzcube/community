@@ -34,13 +34,13 @@
                 <li th:if="${session.user.name != null}">
                     <a href="/publish">发布新的话题</a>
                 </li>
+                <li th:if="${session.user.name != null}"><a href="/profile/replies">消息中心<span class="badge">42</span></a></li>
                 <li class="dropdown" th:if="${session.user.name != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
                         [[${session.user.name}]] <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
                         <li><a th:href="@{/profile/questions/(userId=${session.user.id}, page=1)}">个人中心</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/logout">退出登录</a></li>
