@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaginationDTO<T> {
-    private List<T> data; // 每页展示的话题
+    private List<T> data; // 传入每页展示的话题或者评论等数据
     private boolean showPrevious; // 是否展示前一页按钮
     private boolean showFirstPage;  // 是否展示跳转首页按钮
     private boolean showNextPage; // 是否展示后一页按钮

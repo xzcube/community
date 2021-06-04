@@ -1,6 +1,5 @@
 package com.xzcube.community.controller;
 
-import com.xzcube.community.dto.CommentDTO;
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;

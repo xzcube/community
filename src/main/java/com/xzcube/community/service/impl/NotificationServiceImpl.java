@@ -2,14 +2,10 @@ package com.xzcube.community.service.impl;
 
 import com.xzcube.community.dto.NotificationDTO;
 import com.xzcube.community.dto.PaginationDTO;
-import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.mapper.NotificationMapper;
 import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Notification;
-import com.xzcube.community.model.Question;
-import com.xzcube.community.model.User;
 import com.xzcube.community.service.NotificationService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +26,12 @@ public class NotificationServiceImpl implements NotificationService {
     PaginationDTO<NotificationDTO> paginationDTO;
 
     @Override
-    public PaginationDTO<NotificationDTO> listByUserId(Integer userId, Integer offset, Integer size) {
+    public PaginationDTO<NotificationDTO> listByUserId(Integer userId, Integer page, Integer size) {
         Integer integer = notificationMapper.countByReceiver(userId);
 
-        List<Notification> notifications = notificationMapper.listByUserId(userId, offset, size);
+        List<Notification> notifications = notificationMapper.listByUserId(userId, page, size);
+        Integer totalCount = notificationMapper.countByReceiver(userId);
+
         return null;
     }
 

@@ -2,7 +2,6 @@ package com.xzcube.community.service.impl;
 
 import com.xzcube.community.dto.CommentShowDTO;
 import com.xzcube.community.dto.PaginationDTO;
-import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.enums.CommentTypeEnum;
 import com.xzcube.community.enums.NotificationEnum;
 import com.xzcube.community.enums.NotificationStatusEnum;
@@ -16,6 +15,7 @@ import com.xzcube.community.model.Comment;
 import com.xzcube.community.model.Notification;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.service.CommentService;
+import com.xzcube.community.utils.PageUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,17 +91,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PaginationDTO<CommentShowDTO> listByQuestionId(Integer id, Integer page) {
-        // 页面展示的偏移量
-        int offset = size * (page - 1);
         Integer totalCount = commentMapper.commentCount(id); // 数据库中所有话题数量
-        int i = 2;
-        while(offset >= totalCount){
-            offset = size * (page - i);
-            i++;
-        }
-        offset = Math.max(offset, 0);
+        Integer offset = PageUtils.setOffset(page, totalCount, size);
+
         List<Comment> commentList = commentMapper.findByQuestionId(id, offset);
-        PaginationDTO<CommentShowDTO> paginationDTO = new PaginationDTO();
+        PaginationDTO<CommentShowDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
         List<CommentShowDTO> commentShowDTOList = commentList.stream().map(comment -> {
             CommentShowDTO commentShowDTO = new CommentShowDTO();

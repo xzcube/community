@@ -9,6 +9,7 @@ import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
+import com.xzcube.community.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +46,8 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public PaginationDTO<QuestionDTO> findAllQuestions(Integer page, Integer size) {
-        // 页面展示的偏移量
-        int offset = size * (page - 1);
-        offset = Math.max(offset, 0);
-
         Integer totalCount = questionMapper.count(); // 数据库中所有话题数量
-        int i = 2;
-        while(offset >= totalCount){
-            offset = size * (page - i);
-            i++;
-        }
-        offset = Math.max(offset, 0);
+        Integer offset = PageUtils.setOffset(page, totalCount, size);
         List<Question> questions = questionMapper.findAllQuestions(offset, size);
 
         return setPaginationDTO(totalCount, page, size, questions);
@@ -63,15 +55,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public PaginationDTO<QuestionDTO> findByCreator(Integer creator, Integer page, Integer size) {
-        // 页面展示的偏移量
-        int offset = size * (page - 1);
+
         Integer totalCount = questionMapper.countByCreator(creator); // 数据库中所有话题数量
-        int i = 2;
-        while(offset >= totalCount){
-            offset = size * (page - i);
-            i++;
-        }
-        offset = Math.max(offset, 0);
+        int offset = PageUtils.setOffset(page, totalCount, size);
         List<Question> questions = questionMapper.findByCreator(creator, offset, size);
 
         return setPaginationDTO(totalCount, page, size, questions);
@@ -173,4 +159,5 @@ public class QuestionServiceImpl implements QuestionService {
         paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
+
 }
