@@ -1,10 +1,7 @@
 package com.xzcube.community.mapper;
 
 import com.xzcube.community.model.Notification;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,8 +11,8 @@ import java.util.List;
  */
 @Mapper
 public interface NotificationMapper {
-    @Insert("insert into notification(notifier, receiver, outerId, type, gmt_create)" +
-            "values(#{notifier}, #{receiver}, #{outerId}, #{type}, #{gmtCreate})")
+    @Insert("insert into notification(notifier, receiver, outerId, type, gmt_create, notifier_name, outer_title)" +
+            "values(#{notifier}, #{receiver}, #{outerId}, #{type}, #{gmtCreate}, #{notifierName}, #{outerTitle})")
     void insert(Notification notification);
 
     /**
@@ -25,7 +22,7 @@ public interface NotificationMapper {
      * @param size
      * @return
      */
-    @Select("select * from notification where receiver=#{userId} limit #{offset} #{size}")
+    @Select("select * from notification where receiver=#{userId} order by gmt_create desc limit #{offset}, #{size}")
     List<Notification> listByUserId(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("size") Integer size);
 
     /**
@@ -35,4 +32,18 @@ public interface NotificationMapper {
      */
     @Select("select count(1) from notification where receiver=#{userId}")
     Integer countByReceiver(@Param("userId") Integer userId);
+
+    /**
+     * 查询相关用户未读消息数量
+     * @param receiver
+     * @return
+     */
+    @Select("select count(1) from notification where receiver=#{receiver} and status=0")
+    Integer unreadCount(@Param("receiver") Integer receiver);
+
+    @Update("update notification set status=1 where id=#{id} and status=0")
+    void setUnreadToRead(@Param("id")Integer id);
+
+    @Select("select * from notification where id = #{id} and status=0")
+    Notification findNotificationById(@Param("id")Integer id);
 }

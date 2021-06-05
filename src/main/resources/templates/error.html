@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
     <h1>出错啦！！！</h1>
-    <p th:text="${errorMessage}">服务器顶不住了，稍后再试试吧</p>
+    <p th:text="${errorMessage} == null ? '资源不存在，去其它地方逛逛吧' : ${errorMessage}"></p>
     <p><a class="btn btn-primary btn-lg" href="/" role="button">回到首页</a></p>
 </div>
 </body>

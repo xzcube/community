@@ -24,7 +24,7 @@ function comment2target(targetId, type, content, commentator) {
         }),
         contentType: "application/json",
         success: function (response) {
-            if(response.code === 200 && content !== "") { // 如果响应码是200，将回复框隐藏
+            if(response.code === 200 && content !== "") {
                 window.location.reload();
             }else if(response.code === 2003){
                 let isAccepted = confirm(response.message);

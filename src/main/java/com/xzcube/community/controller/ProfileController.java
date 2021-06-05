@@ -43,24 +43,27 @@ public class ProfileController {
                           @RequestParam(name = "size", defaultValue = "5") Integer size){
 
         User user = userService.findById(userId);
+        model.addAttribute("userById", user); // 将根据 id 查询到的user放入model中
 
         if(user == null){
-            return "redirect:/";
+            return "error";
         }
+        Integer unreadCount = notificationService.unreadCount(user.getId());
         if("questions".equals(action)){
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的话题");
             PaginationDTO<QuestionDTO> paginationDTO = questionService.findByCreator(user.getId(), page, size);
             model.addAttribute("pagination", paginationDTO);
+            model.addAttribute("unreadCount", unreadCount);
         }else if("replies".equals(action)){
-
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.listByUserId(userId, page, size);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
             model.addAttribute("pagination", paginationDTO);
+            model.addAttribute("unreadCount", unreadCount); // 传入未读数
+            return "notification";
 
         }
-        model.addAttribute("userById", user); // 将根据 id 查询到的user放入model中
         return "profile";
     }
 }

@@ -34,14 +34,13 @@
                 <li th:if="${session.user.name != null}">
                     <a href="/publish">发布新的话题</a>
                 </li>
-                <li th:if="${session.user.name != null}"><a href="/profile/replies">消息中心<span class="badge">42</span></a></li>
                 <li class="dropdown" th:if="${session.user.name != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
-                        [[${session.user.name}]] <span class="caret"></span>
+                        [[${session.user.name}]]<span class="badge">[[${session.unreadCount}]]</span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/profile/questions/(userId=${session.user.id}, page=1)}">个人中心</a></li>
+                        <li><a th:href="@{/profile/questions/(userId=${session.user.id}, page=1)}">个人中心<span class="badge">[[${session.unreadCount}]]</span></a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/logout">退出登录</a></li>
                     </ul>
@@ -71,3 +70,47 @@
     </div>
 </div>
 <!--话题展示结束-->
+
+<!--分页开始-->
+<nav aria-label="Page navigation" th:fragment="commenPage">
+    <ul class="pagination">
+        <li th:if="${pagination.showFirstPage}">
+            <a th:href="@{'/profile/' + ${section}(userId=${userById.id},page=1)}" aria-label="Previous">
+                <span aria-hidden="true">&lt;&lt;</span>
+            </a>
+        </li>
+        <li th:if="${pagination.showPrevious}">
+            <a th:href="@{'/profile/' + ${section}(userId=${userById.id}, page=${pagination.page - 1})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}?'active': ''">
+            <a th:href="@{'/profile/' + ${section}(userId=${userById.id}, page=${page})}">[[${page}]]</a>
+        </li>
+
+        <li th:if="${pagination.showNextPage}">
+            <a th:href="@{'/profile/' + ${section}(userId=${userById.id},page=${pagination.page + 1})}" aria-label="Previous">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+        <li th:if="${pagination.showLastPage}">
+            <a th:href="@{'/profile/' + ${section}(userId=${userById.id},page=${pagination.totalPage})}" aria-label="Previous">
+                <span aria-hidden="true">&gt;&gt;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!--分页结束-->
+
+<!--右边侧栏开始-->
+<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" th:fragment="commonRight">
+    <div class="list-group section">
+        <a th:href="@{/profile/questions/(userId=${userById.id}, page=${pagination.page})}" th:class="${section == 'questions'} ? 'list-group-item active':'list-group-item'">我的问题</a>
+        <a th:href="@{/profile/replies/(userId=${userById.id}, page=${pagination.page})}" th:class="${section == 'replies'} ? 'list-group-item active':'list-group-item'">
+            <span class="badge" th:if="${unreadCount} != 0" th:text="${unreadCount}"></span>
+            最新回复
+        </a>
+    </div>
+</div>
+<!--右边侧栏结束-->

@@ -58,14 +58,15 @@ public class CommentServiceImpl implements CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             // 获得相关问题的对象
-            Question question = questionMapper.findById(comment.getParentId());
+            Question question = questionMapper.findById(dbComment.getParentId());
             if(question == null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
 
             commentMapper.insert(comment);
             questionMapper.incComment(comment.getParentId()); // 评论数+1
-            createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_COMMENT);
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(),
+                    question.getTitle(), NotificationEnum.REPLY_COMMENT, question.getId());
 
         }else {
             // 回复问题
@@ -76,7 +77,7 @@ public class CommentServiceImpl implements CommentService {
             commentMapper.insert(comment);
             questionMapper.incComment(comment.getParentId()); // 评论数+1
             createNotify(comment, question.getCreator(), commentator.getName(),
-                    question.getTitle(), NotificationEnum.REPLY_QUESTION);
+                    question.getTitle(), NotificationEnum.REPLY_QUESTION, comment.getParentId());
         }
     }
 
@@ -87,13 +88,15 @@ public class CommentServiceImpl implements CommentService {
      * @param notifierName 发送通知者的用户名
      * @param notificationType 通知类型
      * @param outerTitle 被回复的话题的标题，如果是回复评论，则是该评论所在话题的标题
+     * @param outerId 无论是一级评论还是二级评论，传入的都是相应话题的id
      */
     public void createNotify(Comment comment, Integer receiver,
                              String notifierName, String outerTitle,
-                             NotificationEnum notificationType){
+                             NotificationEnum notificationType,
+                             Integer outerId){
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
-        notification.setOuterId(comment.getParentId());
+        notification.setOuterId(outerId);
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
         notification.setNotifier(comment.getCommentator());
         notification.setReceiver(receiver);

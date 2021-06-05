@@ -4,6 +4,7 @@ import com.xzcube.community.dto.AccessTokenDTO;
 import com.xzcube.community.model.GitHubUser;
 import com.xzcube.community.model.User;
 import com.xzcube.community.provider.AccessProvider;
+import com.xzcube.community.service.NotificationService;
 import com.xzcube.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,9 @@ public class AuthorizeController {
     @Autowired(required=false)
     private UserService userService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
@@ -57,7 +61,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
             userService.createOrUpdate(user);
-
+            Integer unreadCount = notificationService.unreadCount(user.getId());
             // 将token放入cookie中
             response.addCookie(new Cookie("token", uuid));
 

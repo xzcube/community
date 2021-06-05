@@ -43,7 +43,7 @@ public interface QuestionMapper {
     void incView(@Param("id") Integer id);
 
     @Update("update question set comment_count=comment_count+1 where id=#{id}")
-    int incComment(@Param("id") Integer id);
+    void incComment(@Param("id") Integer id);
 
     @Select("select id, title from question ORDER BY view_count DESC LIMIT #{offset}, #{count}")
     List<Question> findHotQuestions(@Param(value = "offset") Integer offset, @Param(value = "count") Integer count);
