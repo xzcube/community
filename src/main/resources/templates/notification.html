@@ -30,6 +30,7 @@
                             [[${notification.typeName}]] &nbsp
                             <a th:href="@{'/notification/' + ${notification.id}}">[[${notification.outerTitle}]]</a>
                             <span class="label-danger label" th:if="${notification.status == 0}">未读</span>
+                            <span class="label-info label" th:if="${notification.status == 1}">已读</span>
                         </span>
                     </p>
                 </div>

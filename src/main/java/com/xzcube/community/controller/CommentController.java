@@ -65,7 +65,7 @@ public class CommentController {
      */
     @GetMapping("/comment/{id}")
     @ResponseBody
-    public ResultDTO<List> comments(@PathVariable("id") Integer patentId){
+    public ResultDTO comments(@PathVariable("id") Integer patentId){
         List<CommentShowDTO> commentShowDTOList = commentService.listByCommentId(patentId, CommentTypeEnum.COMMENT.getType());
 
         return ResultDTO.okOf(commentShowDTOList);

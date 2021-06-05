@@ -44,6 +44,6 @@ public interface NotificationMapper {
     @Update("update notification set status=1 where id=#{id} and status=0")
     void setUnreadToRead(@Param("id")Integer id);
 
-    @Select("select * from notification where id = #{id} and status=0")
+    @Select("select * from notification where id = #{id}")
     Notification findNotificationById(@Param("id")Integer id);
 }

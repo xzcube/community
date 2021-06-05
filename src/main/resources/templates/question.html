@@ -76,7 +76,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 collapse sub-comment"
                                  th:id="'comment-' + ${comment.id}">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <input type="hidden" id="comment_creator" th:value="${comment.user.id}">
+                                    <input type="hidden" id="comment_creator" th:value="${session.user.id}">
                                     <input type="text" class="form-control" placeholder="评论一下..." th:id="'input-' + ${comment.id}">
                                     <button type="button" class="btn btn-success pull-right"
                                             onclick="comment(this)" th:data-id="${comment.id}">评论</button>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <input type="hidden" id="question_id" th:value="${questionDTO.id}"> <!--提交一个隐藏的question，在js中获取，然后作为parentId传入后端-->
-                    <input type="hidden" id="question_creator" th:value="${session.user.id}">
+                    <input type="hidden" id="this_commentator" th:value="${session.user.id}">
                     <textarea class="form-control comment" id="comment_content" rows="6" maxlength="1000"></textarea>
                     <button type="button" class="btn btn-success btn-publish btn-comment" onclick="post()">回复</button>
                 </div>

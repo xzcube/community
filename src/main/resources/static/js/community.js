@@ -4,7 +4,7 @@
 function post() {
     let questionId = $("#question_id").val();
     let content = $("#comment_content").val();
-    let commentator = $("#question_creator").val();
+    let commentator = $("#this_commentator").val();
     comment2target(questionId, 1, content, commentator);
 }
 
@@ -13,6 +13,11 @@ function comment2target(targetId, type, content, commentator) {
         alert("请输入评论");
         return;
     }
+    if(commentator === ""){
+        alert("请先登录");
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: "/comment",
@@ -68,7 +73,7 @@ function collapseComments(e) {
 
         // 如果里面的元素个数为1，说明只有一个回复框，就获取数据追加显示在页面上（没有这个判断，每次点击二级回复按钮都会重复追加显示回复内容）
         if(subCommentContainer.children().length === 1){
-            $.getJSON( "/comment/" + id, function( data ) {
+            $.getJSON( "/comment/" + id, function(data) {
 
                 // 追加显示二级回复的标签和内容（用js手写页面 强）
                 $.each( data.data, function(index, comment) {

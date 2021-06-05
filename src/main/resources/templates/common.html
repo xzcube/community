@@ -34,13 +34,19 @@
                 <li th:if="${session.user.name != null}">
                     <a href="/publish">发布新的话题</a>
                 </li>
+                <li>
+                    <a th:href="@{/profile/replies/(userId=${session.user.id}, page=1)}">
+                        消息<span class="badge" th:if="${session.user.name != null && session.unreadCount != 0}">[[${session.unreadCount}]]</span>
+                    </a>
+                </li>
+
                 <li class="dropdown" th:if="${session.user.name != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
-                        [[${session.user.name}]]<span class="badge">[[${session.unreadCount}]]</span> <span class="caret"></span>
+                        [[${session.user.name}]]<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/profile/questions/(userId=${session.user.id}, page=1)}">个人中心<span class="badge">[[${session.unreadCount}]]</span></a></li>
+                        <li><a th:href="@{/profile/questions/(userId=${session.user.id}, page=1)}">个人中心</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/logout">退出登录</a></li>
                     </ul>
