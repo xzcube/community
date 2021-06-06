@@ -6,6 +6,10 @@
     <title>问题详情</title>
     <link th:replace="common.html::head"/>
     <script src="/js/moment.js"></script>
+    <link rel="stylesheet" href="/css/editormd.preview.min.css">
+    <script src="/js/editormd.js"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 </head>
 <body>
 <!--头部开始-->
@@ -37,7 +41,16 @@
                     编辑
                 </a>
                 <br>
-                <p class="col-xs-12 col-sm-12 col-md-12 col-lg-12" th:text="${questionDTO.description}"></p>
+                <!--正文内容-->
+                <div id="question-view" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <textarea style="display: none" th:text="${questionDTO.description}"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
+                <!--正文内容-->
                 <span class="commentMenu">
                     <span class="glyphicon glyphicon-thumbs-up icon pull-right"> [[${questionDTO.likeCount}]]</span>
                 </span>
