@@ -79,7 +79,7 @@
                             </h5>
                             <div class="commentContent" th:text="${comment.content}"></div>
                             <div class="commentMenu">
-                                <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}"
+                                <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}" th:user-id="${session.user.id}"
                                       onclick="collapseComments(this)"></span><span>[[${comment.commentCount}]]</span>&nbsp|&nbsp
 
                                 <span class="glyphicon glyphicon-thumbs-up icon"></span><span th:text="${comment.likeCount}"></span>
