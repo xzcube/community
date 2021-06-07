@@ -1,7 +1,7 @@
 github:
   client:
-    id: f7425bc7ee111e40a70a5cf425be9d32eb47dcbe25b5b9617ef3229fa32984e1
-    secret: 4f8f44cc09d89e333a260352e41b59cf9396dc865992b8b76baf9ca0f09249c2
+    id:
+    secret:
   redirect:
     uri: http://localhost:8080/callback
 spring:
@@ -9,12 +9,23 @@ spring:
     cache: false
   datasource:
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: mysql1234
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 # 配置驼峰命名的映射
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
+
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKeyId:
+    accessKeySecret:
+    bucketName:

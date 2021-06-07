@@ -25,7 +25,7 @@ import java.io.PrintWriter;
  * @author xzcube
  * @date 2021/5/31 9:44
  */
-@ControllerAdvice
+//@ControllerAdvice
 public class CustomizeErrorException {
     @ExceptionHandler(Exception.class)
     Object exceptionHandler(HttpServletRequest request, Throwable e, Model model,
