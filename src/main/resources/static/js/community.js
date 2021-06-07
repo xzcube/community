@@ -113,4 +113,34 @@ function collapseComments(e) {
             });
         }
     }
+
+}
+
+function delComment(e){
+    confirm("是否确认删除?")
+    let creator = $("#creator").val();
+    let commentId = $("#commentId").val();
+    let parentId = $("#parentId").val();
+    $.ajax({
+        type: "POST",
+        url: "/delComment",
+        data: JSON.stringify({ // 将js对象转换为json
+            "creator": creator,
+            "commentId": commentId,
+            "parentId": parentId
+        }),
+        contentType: "application/json",
+        success: function (response) {
+            if(response.code === 200) {
+                window.location.reload();
+            }else {
+                alert(response.message)
+            }
+        },
+        dataType: "json"
+    });
+}
+
+function delQuestion() {
+    confirm("删除后将无法恢复，是否确认删除?");
 }

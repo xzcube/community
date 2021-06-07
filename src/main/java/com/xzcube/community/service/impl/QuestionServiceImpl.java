@@ -4,6 +4,7 @@ import com.xzcube.community.dto.PaginationDTO;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.exception.CustomizeException;
+import com.xzcube.community.mapper.CommentMapper;
 import com.xzcube.community.mapper.QuestionMapper;
 import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,8 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionMapper questionMapper;
     @Autowired(required = false)
     UserMapper userMapper;
-
+    @Autowired(required = false)
+    CommentMapper commentMapper;
     PaginationDTO<QuestionDTO> paginationDTO;
 
     @Override
@@ -130,6 +133,18 @@ public class QuestionServiceImpl implements QuestionService {
             return questionDTO;
         }).collect(Collectors.toList());
         return questionDTOList;
+    }
+
+    @Override
+    @Transactional
+    public void delQuestionById(Integer questionId) {
+        // 寻找到以该questionId为parent_id的所有commentId，然后删除这些评论以及下面的二级评论
+        List<Integer> commentIdList = commentMapper.selectByParentId(questionId);
+        for (Integer id : commentIdList) {
+            commentMapper.delCommentByParentId(id);
+        }
+        commentMapper.delFirstCommentByParentId(questionId);
+        questionMapper.delById(questionId);
     }
 
     /**

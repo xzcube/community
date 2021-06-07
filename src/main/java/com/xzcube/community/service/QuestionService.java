@@ -32,4 +32,6 @@ public interface QuestionService {
     List<Question> findHotQuestion(Integer offset, Integer count);
 
     List<QuestionDTO> selectRelated(QuestionDTO questionDTO);
+
+    void delQuestionById(Integer questionId);
 }

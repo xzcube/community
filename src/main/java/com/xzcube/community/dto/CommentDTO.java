@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class CommentDTO {
+    Integer commentId;
     private Integer parentId;
     private String content;
     private Integer type;

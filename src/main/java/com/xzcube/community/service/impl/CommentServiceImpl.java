@@ -149,4 +149,12 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.incCommentId(parentId);
     }
 
+    @Override
+    @Transactional
+    public void delCommentById(Integer commentId, Integer questionId) {
+        commentMapper.delCommentById(commentId);
+        commentMapper.delCommentByParentId(commentId);
+        questionMapper.descCommentCount(questionId);
+    }
+
 }

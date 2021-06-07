@@ -50,4 +50,10 @@ public interface QuestionMapper {
 
     @Select("select * from question where id != #{id} and tag regexp #{regexpTag} order by gmt_create desc limit 10")
     List<Question> selectRelated (@Param("id") Integer id, @Param("regexpTag") String regexpTag);
+
+    @Update("update question set comment_count=comment_count-1 where id=#{questionId}")
+    void descCommentCount(@Param("questionId") Integer questionId);
+
+    @Delete("delete from question where id=#{questionId}")
+    void delById(@Param("questionId") Integer questionId);
 }

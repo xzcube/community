@@ -2,6 +2,7 @@ package com.xzcube.community.mapper;
 
 import com.xzcube.community.model.Comment;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -45,4 +46,24 @@ public interface CommentMapper {
      */
     @Update("update comment set comment_count=comment_count+1 where id=#{parentId}")
     void incCommentId(@Param("parentId") Integer parentId);
+
+    @Delete("delete from comment where id=#{commentId} and type=1")
+    void delCommentById(@Param("commentId") Integer commentId);
+
+    /**
+     * 根据parentId删除二级评论
+     * @param commentId
+     */
+    @Delete("delete from comment where parent_id=#{commentId} and type=2")
+    void delCommentByParentId(@Param("commentId") Integer commentId);
+
+    /**
+     * 根据parentId删除一级评论
+     * @param parentId
+     */
+    @Delete("delete from comment where parent_id=#{parentId} and type=1")
+    void delFirstCommentByParentId(@Param("parentId") Integer parentId);
+
+    @Select("select id from comment where parent_id=#{parentId}")
+    List<Integer> selectByParentId(@Param("parentId") Integer parentId);
 }
