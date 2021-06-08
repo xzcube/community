@@ -4,6 +4,7 @@ import com.xzcube.community.dto.CommentDTO;
 import com.xzcube.community.dto.ResultDTO;
 import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.exception.CustomizeException;
+import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.CommentService;
 import com.xzcube.community.service.QuestionService;
@@ -36,15 +37,15 @@ public class DelController {
         return ResultDTO.okOf();
     }
 
-    @GetMapping("/delQuestion")
-    public String delQuestion(@RequestParam(name = "questionId", defaultValue = "0") Integer questionId,
-                              @RequestParam(name = "creator", defaultValue = "0") Integer creator,
+    @PostMapping("/delQuestion")
+    @ResponseBody
+    public Object delQuestion(@RequestBody Question question,
                               HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
-        if(!creator.equals(user.getId())){
+        if(!question.getCreator().equals(user.getId())){
             throw new CustomizeException(CustomizeErrorCode.DEL_ERROR_MESSAGE);
         }
-        questionService.delQuestionById(questionId);
-        return "redirect:/";
+        questionService.delQuestionById(question.getId());
+        return ResultDTO.okOf();
     }
 }

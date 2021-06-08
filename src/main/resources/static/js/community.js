@@ -116,8 +116,11 @@ function collapseComments(e) {
 
 }
 
-function delComment(e){
-    confirm("是否确认删除?")
+function delComment(){
+    let message = confirm("是否确认删除?");
+    if(message === false){
+        return;
+    }
     let creator = $("#creator").val();
     let commentId = $("#commentId").val();
     let parentId = $("#parentId").val();
@@ -142,5 +145,26 @@ function delComment(e){
 }
 
 function delQuestion() {
-    confirm("删除后将无法恢复，是否确认删除?");
+    let message = confirm("删除后将无法恢复，是否确认删除?");
+    if(message === false){
+        return;
+    }
+    let questionId = $("#questionId").val();
+    let creator = $("#question_creator").val();
+    $.ajax({
+        type: "POST",
+        url: "/delQuestion",
+        data: JSON.stringify({ // 将js对象转换为json
+            "id": questionId,
+            "creator": creator,
+        }),contentType: "application/json",
+        success: function (response) {
+            if(response.code === 200) {
+                window.open("/","_self");
+            }else {
+                alert(response.message)
+            }
+        },
+        dataType: "json"
+    });
 }
