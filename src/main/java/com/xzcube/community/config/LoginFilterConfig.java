@@ -1,4 +1,4 @@
-package com.xzcube.community.interfactor;
+package com.xzcube.community.config;
 
 import com.xzcube.community.filter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

@@ -5,6 +5,7 @@ import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
+import com.xzcube.community.utils.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class PublishController {
     QuestionService questionService;
     @Autowired(required = false)
     UserService userService;
+    @Autowired
+    SensitiveFilter sensitiveFilter;
 
     @GetMapping("/publish")
     public String publish(Model model){
@@ -51,6 +54,9 @@ public class PublishController {
                             @RequestParam(value = "questionId", required = false) Integer questionId,
                             HttpServletRequest request,
                             Model model){
+        title = sensitiveFilter.filter(title);
+        description = sensitiveFilter.filter(description);
+        tag = sensitiveFilter.filter(tag);
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);

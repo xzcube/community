@@ -34,11 +34,12 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "5") Integer size){
+                        @RequestParam(name = "size", defaultValue = "5") Integer size,
+                        @RequestParam(name = "search", required = false) String search){
         // 使用token获取user对象(在interceptor中实现了)
 
         // 找到所有已经发布的问题，并放入model中
-        PaginationDTO<QuestionDTO> pagination = questionService.findAllQuestions(page, size);
+        PaginationDTO<QuestionDTO> pagination = questionService.findAllQuestions(search, page, size);
         List<Question> hotQuestions = questionService.findHotQuestion(0, 4); // 查询浏览数最多的四个话题
         model.addAttribute("pagination", pagination);
         model.addAttribute("hotQuestions", hotQuestions);

@@ -1,4 +1,4 @@
-package com.xzcube.community.interfactor;
+package com.xzcube.community.config;
 
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.NotificationService;

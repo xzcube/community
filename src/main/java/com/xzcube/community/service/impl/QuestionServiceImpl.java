@@ -48,7 +48,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param size 每页展示的话题数量
      */
     @Override
-    public PaginationDTO<QuestionDTO> findAllQuestions(Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> findAllQuestions(String search, Integer page, Integer size) {
         Integer totalCount = questionMapper.count(); // 数据库中所有话题数量
         Integer offset = PageUtils.setOffset(page, totalCount, size);
         List<Question> questions = questionMapper.findAllQuestions(offset, size);

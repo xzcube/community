@@ -1,4 +1,4 @@
-package com.xzcube.community.interfactor;
+package com.xzcube.community.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

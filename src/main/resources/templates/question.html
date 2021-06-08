@@ -45,7 +45,7 @@
                     <input type="hidden" id="question_creator" th:value="${questionDTO.creator}">
                     <input onclick="delQuestion()" type="submit" style="border:0" value="删除">
                 </span>
-                <!--正文内容-->
+                <!--正文内容开始-->
                 <div id="question-view" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <textarea style="display: none" th:text="${questionDTO.description}"></textarea>
                 </div>
@@ -54,10 +54,10 @@
                         editormd.markdownToHTML("question-view", {});
                     });
                 </script>
-                <!--正文内容-->
-                <span class="commentMenu">
-                    <span class="glyphicon glyphicon-thumbs-up icon pull-right"> [[${questionDTO.likeCount}]]</span>
-                </span>
+                <!--正文内容结束-->
+                <div class="commentMenu">
+                    <span class="glyphicon glyphicon-thumbs-up icon pull-right" onclick="giveLike(this)">&thinsp;[[${questionDTO.likeCount}]]</span>
+                </div>
                 <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             </div>
             <!--话题正文结束-->
@@ -92,7 +92,8 @@
                                 <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}" th:user-id="${session.user.id}"
                                       onclick="collapseComments(this)"></span><span>[[${comment.commentCount}]]</span>&nbsp|&nbsp
 
-                                <span class="glyphicon glyphicon-thumbs-up icon"></span><span th:text="${comment.likeCount}"></span>
+                                <span class="glyphicon glyphicon-thumbs-up icon" onclick="giveLike(this)">&thinsp;[[${comment.likeCount}]]</span>
+                                <!--<span th:text="${comment.likeCount}"></span>-->
                                 <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
                             </div>
                             <!--二级评论开始 内容由js文件手写追加进入-->

@@ -47,7 +47,6 @@ public class AliyunOSSUtil {
         }
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
         // 上传文件流。
         ossClient.putObject(bucketName, generatedFileName, inputStream);
 
@@ -55,6 +54,7 @@ public class AliyunOSSUtil {
         Date expiration = new Date(dateTime);
         // 生成以GET方法访问的签名URL，访客可以直接通过浏览器访问相关内容。
         URL url = ossClient.generatePresignedUrl(bucketName, generatedFileName, expiration);
+        System.out.println(url.toString());
         if (url != null) {
             // 关闭OSSClient。
             ossClient.shutdown();
@@ -62,8 +62,6 @@ public class AliyunOSSUtil {
         } else {
             throw new CustomizeException(CustomizeErrorCode.FILE_UPLOAD_FAIL);
         }
-
     }
-
 }
 
