@@ -21,7 +21,7 @@ public class LikeServiceImpl implements LikeService {
      * @param entityType 被点赞的实体类型
      * @param entityId 被点赞实体的id
      */
-    public void like(Integer userId, String entityType, Integer entityId){
+    public void like(Integer userId, int entityType, Integer entityId){
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
 
         // 判断改用户是否已经在set中，如果在，说明已经点了赞，不在的话说明没有点赞
@@ -39,12 +39,12 @@ public class LikeServiceImpl implements LikeService {
      * @param entityId
      * @return
      */
-    public long findEntityLikeCount(String entityType, Integer entityId){
+    public long findEntityLikeCount(int entityType, Integer entityId){
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
         return redisTemplate.opsForSet().size(entityLikeKey);
     }
 
-    public int findEntityLikeStatus(int userId, String entityType, int entityId){
+    public int findEntityLikeStatus(int userId, int entityType, int entityId){
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
         // 如果userId在set中，说明已经点过赞，返回1，否则返回0
         return redisTemplate.opsForSet().isMember(entityLikeKey, userId) ? 1 : 0;

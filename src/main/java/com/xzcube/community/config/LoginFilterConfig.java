@@ -16,7 +16,7 @@ public class LoginFilterConfig {
     public FilterRegistrationBean<LoginFilter> loginFilterBean(){
         FilterRegistrationBean<LoginFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LoginFilter());
-        filterRegistrationBean.addUrlPatterns("/comment", "/notification/*", "/profile/replies/*", "/publish/*");
+        filterRegistrationBean.addUrlPatterns("/comment", "/notification/*", "/profile/replies/*", "/publish/*", "/like");
         return filterRegistrationBean;
     }
 }

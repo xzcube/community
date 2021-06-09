@@ -169,10 +169,26 @@ function delQuestion() {
     });
 }
 
-function giveLike(e) {
-    if(e.classList.contains("active")){
-        e.classList.remove("active");
-    }else {
-        e.classList.add("active");
-    }
+function giveLike(e, entityType, entityId) {
+    $.post(
+        "/like",
+        {
+            "entityType": entityType,
+            "entityId": entityId
+        },
+        function (data) {
+            data = $.parseJSON(data);
+            if(data.code === 0){
+                $(e).children(".likeCount").text(data.likeCount);
+                if(data.likeStatus === 0){
+                    e.classList.remove("active");
+                }else if (data.likeStatus === 1){
+                    e.classList.add("active");
+                }
+            }else {
+                alert(data.message);
+            }
+
+        }
+    );
 }

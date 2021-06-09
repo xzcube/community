@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -20,6 +19,7 @@ import java.util.Date;
  *
  * 这是统一日志处理的类,利用AOP切面技术，在访问service方法时会执行pointcut。定义了一个切面类
  */
+@Aspect
 public class ServiceLogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceLogAspect.class);
@@ -43,4 +43,3 @@ public class ServiceLogAspect {
         logger.info(String.format("用户[%s],在[%s],访问了[%s].", ip, now, target));
     }
 }
-

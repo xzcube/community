@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * 处理其他项目中未定义的异常
  */
 //@Controller
-@RequestMapping("${server.error.path:${error.path:/error}}")
+///@RequestMapping("${server.error.path:${error.path:/error}}")
 public class CustomizeErrorController implements ErrorController {
 
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)

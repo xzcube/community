@@ -28,9 +28,8 @@ import java.io.PrintWriter;
 //@ControllerAdvice
 public class CustomizeErrorException {
     @ExceptionHandler(Exception.class)
-    Object exceptionHandler(HttpServletRequest request, Throwable e, Model model,
+    public Object exceptionHandler(HttpServletRequest request, Throwable e, Model model,
                             HttpServletResponse response){
-
         String contentType = request.getContentType();
         if("application/json".equals(contentType)){
             ResultDTO resultDTO;
