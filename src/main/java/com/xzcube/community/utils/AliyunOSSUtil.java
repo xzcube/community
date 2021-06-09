@@ -54,7 +54,6 @@ public class AliyunOSSUtil {
         Date expiration = new Date(dateTime);
         // 生成以GET方法访问的签名URL，访客可以直接通过浏览器访问相关内容。
         URL url = ossClient.generatePresignedUrl(bucketName, generatedFileName, expiration);
-        System.out.println(url.toString());
         if (url != null) {
             // 关闭OSSClient。
             ossClient.shutdown();

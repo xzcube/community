@@ -8,6 +8,7 @@ import com.xzcube.community.exception.CustomizeErrorCode;
 import com.xzcube.community.model.Comment;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.CommentService;
+import com.xzcube.community.utils.HostHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,18 +26,18 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private HostHolder hostHolder;
 
     /**
      * 发布二级评论
      * @param commentDTO 对应一级评论的id
-     * @param request
      * @return
      */
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @ResponseBody
-    public Object post(@RequestBody CommentDTO commentDTO,
-                       HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+    public Object post(@RequestBody CommentDTO commentDTO){
+        User user = hostHolder.getUser();
 
         if(user.getId() == null){
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);

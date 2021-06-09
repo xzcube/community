@@ -3,6 +3,7 @@ package com.xzcube.community.config;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.NotificationService;
 import com.xzcube.community.service.UserService;
+import com.xzcube.community.utils.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,6 +25,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     UserService userService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    HostHolder hostHolder;
 
     /**
      * 在处理所有请求之前进行的 获取用户信息并放入session中
@@ -51,7 +54,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             request.getSession().setAttribute("user", user);
             Integer unreadCount = notificationService.unreadCount(user.getId());
             request.getSession().setAttribute("unreadCount", unreadCount);
-
+            hostHolder.setUser(user);
         }else {
             request.getSession().setAttribute("user", new User());
         }

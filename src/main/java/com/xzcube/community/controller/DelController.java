@@ -8,6 +8,7 @@ import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.CommentService;
 import com.xzcube.community.service.QuestionService;
+import com.xzcube.community.utils.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +23,16 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class DelController {
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
+    @Autowired
+    private HostHolder hostHolder;
 
     @PostMapping("/delComment")
     @ResponseBody
-    public Object delComment(@RequestBody CommentDTO commentDTO, HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+    public Object delComment(@RequestBody CommentDTO commentDTO){
+        User user = hostHolder.getUser();
         if(!commentDTO.getCreator().equals(user.getId())){
             throw new CustomizeException(CustomizeErrorCode.DEL_ERROR_MESSAGE);
         }
@@ -39,9 +42,8 @@ public class DelController {
 
     @PostMapping("/delQuestion")
     @ResponseBody
-    public Object delQuestion(@RequestBody Question question,
-                              HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+    public Object delQuestion(@RequestBody Question question){
+        User user = hostHolder.getUser();
         if(!question.getCreator().equals(user.getId())){
             throw new CustomizeException(CustomizeErrorCode.DEL_ERROR_MESSAGE);
         }

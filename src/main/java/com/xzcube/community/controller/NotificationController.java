@@ -4,6 +4,7 @@ import com.xzcube.community.dto.NotificationDTO;
 import com.xzcube.community.enums.NotificationEnum;
 import com.xzcube.community.model.User;
 import com.xzcube.community.service.NotificationService;
+import com.xzcube.community.utils.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class NotificationController {
     @Autowired
-    NotificationService notificationService;
+    private NotificationService notificationService;
+    @Autowired
+    private HostHolder hostHolder;
 
     @GetMapping("/notification/{id}")
-    public String profile(HttpServletRequest request,
-                          @PathVariable("id") Integer id){
-        User user = (User) request.getSession().getAttribute("user");
+    public String profile(@PathVariable("id") Integer id){
+        User user = hostHolder.getUser();
         if(user == null){
             return "redirect:/";
         }

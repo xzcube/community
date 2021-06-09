@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LikeServiceImpl implements LikeService {
     @Autowired
-    RedisTemplate redisTemplate;
+    RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 实现点赞的业务方法
