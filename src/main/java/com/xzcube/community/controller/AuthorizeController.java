@@ -43,12 +43,12 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           @RequestParam(name = "url", required = false) String url,
+                           HttpServletRequest request,
                            HttpServletResponse response){
         // 将参数封装到AccessTokenDTO中
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirectUri);
-        accessTokenDTO.setState(state);
+        accessTokenDTO.setState("1");
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
         String token = accessProvider.getAccessToken(accessTokenDTO);
@@ -62,11 +62,13 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
             userService.createOrUpdate(user);
-            Integer unreadCount = notificationService.unreadCount(user.getId());
+            if(request.getSession().getAttribute("user") == null){
+                request.getSession().setAttribute("user", user);
+            }
             // 将token放入cookie中
             response.addCookie(new Cookie("token", uuid));
             
-            return "redirect:" + url;
+            return "redirect:" + state;
         }else {
             // 登录失败，重新登录
             return "redirect:/";
@@ -82,7 +84,9 @@ public class AuthorizeController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response){
+
         request.getSession().removeAttribute("user"); // 删除session
+
         // 覆盖掉原来的cookie，然后设置生存时间为0
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);

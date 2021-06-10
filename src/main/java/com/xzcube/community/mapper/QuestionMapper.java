@@ -48,6 +48,12 @@ public interface QuestionMapper {
     @Select("select id, title from question ORDER BY view_count DESC LIMIT #{offset}, #{count}")
     List<Question> findHotQuestions(@Param(value = "offset") Integer offset, @Param(value = "count") Integer count);
 
+    /**
+     * 寻找相关话题
+     * @param id
+     * @param regexpTag
+     * @return
+     */
     @Select("select * from question where id != #{id} and tag regexp #{regexpTag} order by gmt_create desc limit 10")
     List<Question> selectRelated (@Param("id") Integer id, @Param("regexpTag") String regexpTag);
 
