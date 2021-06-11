@@ -15,8 +15,9 @@ public class ElasticsearchConfig {
 
     /**
      * localhost:9300 写在配置文件中就可以了
+     * 配置elasticsearch客户端
      */
-    @Bean
+    @Bean(name = "myEsClient")
     RestHighLevelClient elasticsearchClient() {
         ClientConfiguration configuration = ClientConfiguration.builder()
                 .connectedTo("localhost:9200")

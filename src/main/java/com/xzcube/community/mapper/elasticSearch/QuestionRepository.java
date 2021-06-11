@@ -2,6 +2,8 @@ package com.xzcube.community.mapper.elasticSearch;
 
 import com.xzcube.community.model.Question;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface QuestionRepository extends ElasticsearchRepository<Question, Integer> {
+
 }

@@ -20,6 +20,9 @@ spring:
     host: 8.141.64.248
     port: 6380
     database: 10
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
 
 # 配置驼峰命名的映射
 mybatis:
