@@ -6,6 +6,7 @@ import com.xzcube.community.model.User;
 import com.xzcube.community.provider.AccessProvider;
 import com.xzcube.community.service.NotificationService;
 import com.xzcube.community.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.UUID;
  * 处理gitee的回调请求,实现gitee第三方登录
  */
 @Controller
+@Slf4j
 public class AuthorizeController {
     @Autowired
     private AccessProvider accessProvider;
@@ -71,6 +73,7 @@ public class AuthorizeController {
             return "redirect:" + state;
         }else {
             // 登录失败，重新登录
+            log.error("callback get hithub error, {}", gitHubUser);
             return "redirect:/";
         }
     }
