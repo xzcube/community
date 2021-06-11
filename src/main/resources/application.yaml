@@ -1,0 +1,35 @@
+github:
+  client:
+    id: **********
+    secret: **********
+  redirect:
+    uri: http://localhost:8080/callback
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf8
+    username: ******
+    password: *********
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  redis:
+    host: 8.141.64.248
+    port: 6380
+    database: 10
+
+# 配置驼峰命名的映射
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
+
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKeyId: *************
+    accessKeySecret: ***************
+    bucketName: thiscommunity
