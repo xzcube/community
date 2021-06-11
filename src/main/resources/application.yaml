@@ -1,7 +1,7 @@
 github:
   client:
-    id: **********
-    secret: **********
+    id: ******************
+    secret: *****************
   redirect:
     uri: http://localhost:8080/callback
 spring:
@@ -9,8 +9,8 @@ spring:
     cache: false
   datasource:
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf8
-    username: ******
-    password: *********
+    username: ***********
+    password: ***********
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -20,6 +20,9 @@ spring:
     host: 8.141.64.248
     port: 6380
     database: 10
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
 
 # 配置驼峰命名的映射
 mybatis:
@@ -30,6 +33,20 @@ mybatis:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    accessKeyId: *************
-    accessKeySecret: ***************
+    accessKeyId: ************
+    accessKeySecret: ************
     bucketName: thiscommunity
+logging:
+  file:
+    name: logs/community.log
+
+  level:
+    com:
+      xzcube:
+        community:
+          mapper: debug
+  logback:
+    rollingpolicy:
+      max-file-size: 50MB
+      max-history: 15
+

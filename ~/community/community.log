@@ -1,0 +1,40 @@
+2021-06-11 11:28:25.699  INFO 10704 --- [main] c.xzcube.community.CommunityApplication  : Starting CommunityApplication using Java 1.8.0_271 on LAPTOP-50K4NSG0 with PID 10704 (D:\ideaProject\community\target\classes started by kono in D:\ideaProject\community)
+2021-06-11 11:28:25.699  INFO 10704 --- [main] c.xzcube.community.CommunityApplication  : No active profile set, falling back to default profiles: default
+2021-06-11 11:28:25.764  WARN 10704 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2021-06-11 11:28:26.296  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-11 11:28:26.296  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+2021-06-11 11:28:26.350  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 1 Elasticsearch repository interfaces.
+2021-06-11 11:28:26.350  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-11 11:28:26.350  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+2021-06-11 11:28:26.360  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Reactive Elasticsearch repository interfaces.
+2021-06-11 11:28:26.371  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-11 11:28:26.371  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-11 11:28:26.382  INFO 10704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.xzcube.community.mapper.elasticSearch.QuestionRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+2021-06-11 11:28:26.382  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JPA repository interfaces.
+2021-06-11 11:28:26.392  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-06-11 11:28:26.392  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-06-11 11:28:26.403  INFO 10704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.xzcube.community.mapper.elasticSearch.QuestionRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
+2021-06-11 11:28:26.403  INFO 10704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2021-06-11 11:28:26.808  INFO 10704 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-06-11 11:28:26.819  INFO 10704 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-06-11 11:28:26.819  INFO 10704 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.46]
+2021-06-11 11:28:26.962  INFO 10704 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-06-11 11:28:26.962  INFO 10704 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1231 ms
+2021-06-11 11:28:27.075  INFO 10704 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-06-11 11:28:27.566  INFO 10704 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-06-11 11:28:27.598  INFO 10704 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-11 11:28:27.630  INFO 10704 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.31.Final
+2021-06-11 11:28:27.704  INFO 10704 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-11 11:28:27.790  INFO 10704 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-06-11 11:28:27.907  INFO 10704 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-11 11:28:27.918  INFO 10704 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-11 11:28:28.622  INFO 10704 --- [main] o.s.d.elasticsearch.support.VersionInfo  : Version Spring Data Elasticsearch: 4.2.1
+2021-06-11 11:28:28.622  INFO 10704 --- [main] o.s.d.elasticsearch.support.VersionInfo  : Version Elasticsearch Client in build: 7.12.1
+2021-06-11 11:28:28.622  INFO 10704 --- [main] o.s.d.elasticsearch.support.VersionInfo  : Version Elasticsearch Client used: 7.12.1
+2021-06-11 11:28:28.622  INFO 10704 --- [main] o.s.d.elasticsearch.support.VersionInfo  : Version Elasticsearch cluster: 7.12.1
+2021-06-11 11:28:28.696  WARN 10704 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-11 11:28:29.006  INFO 10704 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-06-11 11:28:29.251  INFO 10704 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-06-11 11:28:29.265  INFO 10704 --- [main] c.xzcube.community.CommunityApplication  : Started CommunityApplication in 3.973 seconds (JVM running for 4.817)
+2021-06-11 11:28:29.265  INFO 10704 --- [main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2021-06-11 11:28:29.265  INFO 10704 --- [main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
