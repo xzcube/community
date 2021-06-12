@@ -8,6 +8,7 @@ import com.xzcube.community.utils.CommunityUtil;
 import com.xzcube.community.utils.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +28,7 @@ public class LikeController {
 
     @PostMapping("/like")
     @ResponseBody
-    public String like(Integer entityId, int entityType){
+    public String like(Integer entityId, int entityType, Model model){
         User user = hostHolder.getUser();
         if(user == null)
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
@@ -41,6 +42,7 @@ public class LikeController {
         Map<String, Object> map = new HashMap<>();
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);
+
         return CommunityUtil.getJSONString(0, null, map);
     }
 }

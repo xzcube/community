@@ -55,10 +55,4 @@ public class UpLoadController {
         return fileDTO;
     }
 
-    public FileDTO upload(){
-        FileDTO fileDTO = new FileDTO();
-        fileDTO.setSuccess(1);
-        fileDTO.setUrl("/images/iceman.png");
-        return fileDTO;
-    }
 }

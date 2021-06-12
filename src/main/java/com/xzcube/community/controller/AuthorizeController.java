@@ -44,7 +44,7 @@ public class AuthorizeController {
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state,
+                           @RequestParam(name = "state", required = false) String state,
                            HttpServletRequest request,
                            HttpServletResponse response){
         // 将参数封装到AccessTokenDTO中
@@ -69,8 +69,10 @@ public class AuthorizeController {
             }
             // 将token放入cookie中
             response.addCookie(new Cookie("token", uuid));
-            
-            return "redirect:" + state;
+            if(state != null){
+                return "redirect:" + state;
+            }
+            return "redirect:/";
         }else {
             // 登录失败，重新登录
             log.error("callback get hithub error, {}", gitHubUser);

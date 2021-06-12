@@ -9,6 +9,7 @@ import com.xzcube.community.mapper.QuestionMapper;
 import com.xzcube.community.mapper.UserMapper;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
+import com.xzcube.community.service.ElasticsearchService;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +36,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired(required = false)
     CommentMapper commentMapper;
     PaginationDTO<QuestionDTO> paginationDTO;
+    /*@Autowired
+    ElasticsearchService elasticsearchService;*/
 
     @Override
     public void create(Question question) {
@@ -93,10 +96,12 @@ public class QuestionServiceImpl implements QuestionService {
             // 设置创建时间和修改时间
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            //elasticsearchService.saveQuestion(question);
             questionMapper.create(question);
         }else {
             // 设置修改时间，更新数据库信息
             question.setGmtModified(question.getGmtCreate());
+            //elasticsearchService.saveQuestion(question);
             questionMapper.update(question);
         }
     }
@@ -143,6 +148,7 @@ public class QuestionServiceImpl implements QuestionService {
         for (Integer id : commentIdList) {
             commentMapper.delCommentByParentId(id);
         }
+        //elasticsearchService.deleteQuestion(questionId);
         commentMapper.delFirstCommentByParentId(questionId);
         questionMapper.delById(questionId);
     }

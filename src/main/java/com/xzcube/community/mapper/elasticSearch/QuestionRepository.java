@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * 配置elasticsearch的访问
  */
-@Repository
-public interface QuestionRepository extends ElasticsearchRepository<Question, Integer> {
+//@Repository
+/*public interface QuestionRepository extends ElasticsearchRepository<Question, Integer> {
 
-}
+}*/

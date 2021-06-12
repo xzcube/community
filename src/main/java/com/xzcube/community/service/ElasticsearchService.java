@@ -1,5 +1,6 @@
 package com.xzcube.community.service;
 
+import com.xzcube.community.model.Question;
 import org.elasticsearch.search.SearchHits;
 
 import java.io.IOException;
@@ -10,4 +11,8 @@ import java.io.IOException;
  */
 public interface ElasticsearchService {
     SearchHits searchQuestion(String keyWord, int current, int limit) throws IOException;
+
+    public void saveQuestion(Question question);
+
+    public void deleteQuestion(Integer id);
 }

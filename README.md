@@ -6,3 +6,16 @@
 [github OAuth文档](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app)
 
 ## 工具
+
+## 部署
+## 依赖
+-Git
+-JDK
+-Maven
+-MySQL
+-Redis
+-ElasticSearch
+
+## 步骤
+- yum update
+- yum install update

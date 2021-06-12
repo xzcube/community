@@ -3,6 +3,7 @@ package com.xzcube.community.controller;
 import com.xzcube.community.dto.QuestionDTO;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.model.User;
+import com.xzcube.community.service.ElasticsearchService;
 import com.xzcube.community.service.QuestionService;
 import com.xzcube.community.service.UserService;
 import com.xzcube.community.utils.SensitiveFilter;

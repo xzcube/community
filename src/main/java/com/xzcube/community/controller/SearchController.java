@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * 搜索功能整合了elasticsearch 但是加上去的话与前端的交互改动太大，可以用postman模拟实现
  */
-@Controller
+//@Controller
 public class SearchController {
     @Autowired
     private ElasticsearchService elasticsearchService;

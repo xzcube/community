@@ -1,6 +1,6 @@
 package com.xzcube.community.service.impl;
 
-import com.xzcube.community.mapper.elasticSearch.QuestionRepository;
+//import com.xzcube.community.mapper.elasticSearch.QuestionRepository;
 import com.xzcube.community.model.Question;
 import com.xzcube.community.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequest;
@@ -26,21 +26,21 @@ import java.io.IOException;
  * @date 2021/6/11 9:48
  * 搜索功能应该整合elasticsearch进行实现，但是现在
  */
-@Service
+//@Service
 public class ElasticsearchServiceImpl implements ElasticsearchService {
     @Qualifier("myEsClient")
     @Autowired
     private RestHighLevelClient esClient;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    ///private QuestionRepository questionRepository;
 
     /**
      * 将帖子存在elasticsearch中
      * @param question
      */
     public void saveQuestion(Question question){
-        questionRepository.save(question);
+        //questionRepository.save(question);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
      * @param id
      */
     public void deleteQuestion(Integer id){
-        questionRepository.deleteById(id);
+        //questionRepository.deleteById(id);
     }
 
     /**

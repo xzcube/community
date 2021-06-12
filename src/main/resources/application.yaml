@@ -20,9 +20,6 @@ spring:
     host: 8.141.64.248
     port: 6380
     database: 10
-  elasticsearch:
-    rest:
-      uris: http://localhost:9200
 
 # 配置驼峰命名的映射
 mybatis:
@@ -33,8 +30,8 @@ mybatis:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    accessKeyId: LTAI5tCfcy1DyhpvqFzpWWDs
-    accessKeySecret: zXLWZm2VNRcvuXbh9AIM2WTN1fHBZ4
+    accessKeyId: LTAI5tNDAwGq6piZJ7T7GDRD
+    accessKeySecret: JAER7sZQbpHX10lrJWdDcbsOEzIdCu
     bucketName: thiscommunity
 logging:
   file:
