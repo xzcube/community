@@ -34,7 +34,7 @@ public interface CommentMapper {
     @Select("select count(1) from comment where parent_id=#{parentId}")
     Integer commentCount(@Param("parentId") Integer parentId);
 
-    @Select("select * from comment where parent_id = #{parentId} order by GMT_CREATE desc limit #{offset}, 4")
+    @Select("select * from comment where parent_id = #{parentId} and type=1 order by GMT_CREATE desc limit #{offset}, 4")
     List<Comment> findByQuestionId(@Param("parentId") Integer parentId, @Param(value = "offset") Integer offset);
 
     @Select("select * from comment where parent_id = #{parentId} and type=#{type} order by GMT_CREATE desc")

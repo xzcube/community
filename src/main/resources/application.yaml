@@ -1,9 +1,9 @@
 github:
   client:
     id: f7425bc7ee111e40a70a5cf425be9d32eb47dcbe25b5b9617ef3229fa32984e1
-    secret: 4f8f44cc09d89e333a260352e41b59cf9396dc865992b8b76baf9ca0f09249c2
+    secret: 254b4670904f35567bb4daf0bf8268d92fc698f6f62a396aeb5b6b432319caf4
   redirect:
-    uri: http://8.141.64.248/callback
+    uri: http://localhost:8081/callback
 spring:
   thymeleaf:
     cache: false
@@ -47,4 +47,4 @@ logging:
       max-file-size: 50MB
       max-history: 15
 server:
-  port: 80
+  port: 8081

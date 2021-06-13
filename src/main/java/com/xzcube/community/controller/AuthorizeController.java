@@ -39,9 +39,6 @@ public class AuthorizeController {
     @Autowired(required=false)
     private UserService userService;
 
-    @Autowired
-    private NotificationService notificationService;
-
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state", required = false) String state,
