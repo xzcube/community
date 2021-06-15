@@ -1,7 +1,7 @@
 github:
   client:
-    id: f7425bc7ee111e40a70a5cf425be9d32eb47dcbe25b5b9617ef3229fa32984e1
-    secret: 254b4670904f35567bb4daf0bf8268d92fc698f6f62a396aeb5b6b432319caf4
+    id: ************
+    secret: ****************
   redirect:
     uri: http://localhost:8081/callback
 spring:
@@ -9,8 +9,8 @@ spring:
     cache: false
   datasource:
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: mysql1234
+    username: ********
+    password: ************
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -30,8 +30,8 @@ mybatis:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    accessKeyId: LTAI5tNDAwGq6piZJ7T7GDRD
-    accessKeySecret: JAER7sZQbpHX10lrJWdDcbsOEzIdCu
+    accessKeyId: **********
+    accessKeySecret: ***********
     bucketName: thiscommunity
 logging:
   file:
