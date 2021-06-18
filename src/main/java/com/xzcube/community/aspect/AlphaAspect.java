@@ -4,8 +4,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
-//@Component
-//@Aspect
+@Component
+@Aspect
 public class AlphaAspect {
 
     //对所有的业务组件统一处理
